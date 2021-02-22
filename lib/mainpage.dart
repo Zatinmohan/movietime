@@ -17,7 +17,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey =
       new GlobalKey<ScaffoldState>(); //for scaffold drawer bar
-  final String key = '';
+  final String key = 'cab94483358eefe91330d43330d0ebff'; //gitignoreline
   static String url = 'https://api.themoviedb.org/3/';
   //final String image_url = 'https://image.tmdb.org/t/p/original';
 
