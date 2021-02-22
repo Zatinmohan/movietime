@@ -1,6 +1,12 @@
 # movietime
+A simple flutter app that shows you the details about the movies.
 
-A new Flutter project.
+## Resources
+
+(Design Courtsey)[https://www.behance.net/gallery/96923617/Movie-App-Concept?tracking_source=search_projects_recommended%7Cmovie%20app]
+(The Movie Database API)[https://developers.themoviedb.org/3/getting-started/introduction]
+
+
 
 ## Getting Started
 
