@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:movietime/widgets/api_key.dart';
+
+import 'moviedetail.dart';
 
 class TopMix extends StatelessWidget {
   final movieList;
@@ -19,21 +22,27 @@ class TopMix extends StatelessWidget {
           itemCount: 6,
           itemBuilder: (BuildContext context, int index) {
             String poster = movieList[index]['poster_path'];
-            return Container(
-              margin: EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.0),
-                  boxShadow: [
-                    BoxShadow(
-                      offset: Offset(0.0, 3.0),
-                      blurRadius: 6.0,
-                      color: Colors.black26,
-                    )
-                  ],
-                  image: DecorationImage(
-                    image: NetworkImage('$url$poster'),
-                    fit: BoxFit.fill,
-                  )),
+            int id = movieList[index]['id'];
+
+            return GestureDetector(
+              onTap: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => MovieDetail(id: id))),
+              child: Container(
+                margin: EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.0),
+                    boxShadow: [
+                      BoxShadow(
+                        offset: Offset(0.0, 3.0),
+                        blurRadius: 6.0,
+                        color: Colors.black26,
+                      )
+                    ],
+                    image: DecorationImage(
+                      image: NetworkImage('$url$poster'),
+                      fit: BoxFit.fill,
+                    )),
+              ),
             );
           }),
     );

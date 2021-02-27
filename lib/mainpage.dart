@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:movietime/model/navbar.dart';
+import 'package:movietime/widgets/api_key.dart';
 
 import 'package:movietime/widgets/colrow.dart';
 import 'package:movietime/widgets/topMovies.dart';
@@ -17,7 +18,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey =
       new GlobalKey<ScaffoldState>(); //for scaffold drawer bar
-  final String key = '';
+
   static String url = 'https://api.themoviedb.org/3/';
   //final String image_url = 'https://image.tmdb.org/t/p/original';
 

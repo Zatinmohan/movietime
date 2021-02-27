@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movietime/model/colordata.dart';
+import 'package:movietime/widgets/moviedetail.dart';
 
 class Category extends StatelessWidget {
   final popularMovies;
@@ -27,7 +28,7 @@ class Category extends StatelessWidget {
                 style: TextStyle(
                   color: textColor,
                   fontSize: 20.0,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w900,
                 )),
             Text('Show All',
                 style: TextStyle(
@@ -44,61 +45,66 @@ class Category extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount: 6,
             itemBuilder: (BuildContext context, int index) {
+              int id = popularMovies[index]['id'];
               String poster = popularMovies[index]['poster_path'];
               String title = popularMovies[index]['title'];
               String rating =
                   '⭐  ' + popularMovies[index]['vote_average'].toString();
-              return Container(
-                width: width,
-                child: Stack(
-                  children: [
-                    Container(
-                      height: height,
-                      margin: EdgeInsets.only(right: 16.0, top: 5.0),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20.0),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: Offset(0.0, 3.0),
-                              blurRadius: 6.0,
-                              color: Colors.black26,
-                            ),
-                          ],
-                          image: DecorationImage(
-                            image: NetworkImage('$url$poster'),
-                            fit: BoxFit.fill,
-                          )),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              '$title',
-                              style: TextStyle(
-                                color: textColor,
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w500,
+              return GestureDetector(
+                onTap: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => MovieDetail(id: id))),
+                child: Container(
+                  width: width,
+                  child: Stack(
+                    children: [
+                      Container(
+                        height: height,
+                        margin: EdgeInsets.only(right: 16.0, top: 5.0),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20.0),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: Offset(0.0, 3.0),
+                                blurRadius: 6.0,
+                                color: Colors.black26,
                               ),
-                              overflow: TextOverflow.fade,
-                              maxLines: 1,
-                            ),
-                            SizedBox(height: 2.0),
-                            Text(
-                              '$rating',
-                              style: TextStyle(
-                                  color: Colors.blueGrey, fontSize: 15.0),
-                            )
-                          ],
+                            ],
+                            image: DecorationImage(
+                              image: NetworkImage('$url$poster'),
+                              fit: BoxFit.fill,
+                            )),
+                      ),
+                      Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(
+                                '$title',
+                                style: TextStyle(
+                                  color: textColor,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                overflow: TextOverflow.fade,
+                                maxLines: 1,
+                              ),
+                              SizedBox(height: 2.0),
+                              Text(
+                                '$rating',
+                                style: TextStyle(
+                                    color: Colors.blueGrey, fontSize: 15.0),
+                              )
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               );
             },

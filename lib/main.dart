@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'mainpage.dart';
 
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         primaryColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        textTheme: GoogleFonts.robotoTextTheme(Theme.of(context).textTheme),
       ),
       home: MainPage(),
     );
