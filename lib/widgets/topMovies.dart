@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:movietime/widgets/api_key.dart';
 
 import 'moviedetail.dart';
 
