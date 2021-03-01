@@ -114,6 +114,7 @@ class _MainPageState extends State<MainPage> {
                       popularMovies: popularMovies,
                       width: 180.0,
                       height: 250.0,
+                      home: true,
                     ),
                     SizedBox(height: 20.0),
                     Category(
@@ -121,12 +122,14 @@ class _MainPageState extends State<MainPage> {
                       popularMovies: cinemaMovie,
                       width: 280,
                       height: 240,
+                      home: true,
                     ),
                     Category(
                       title: "COMING SOON",
                       popularMovies: upcommingMovies,
                       width: 150,
                       height: 200,
+                      home: true,
                     ),
                   ],
                 )),

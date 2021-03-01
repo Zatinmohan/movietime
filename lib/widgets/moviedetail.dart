@@ -5,10 +5,13 @@ import 'package:http/http.dart' as https;
 import 'package:movietime/model/colordata.dart';
 import 'package:movietime/widgets/RowButtons.dart';
 import 'package:movietime/widgets/api_key.dart';
+import 'package:movietime/widgets/cast.dart';
+import 'package:movietime/widgets/colrow.dart';
 import 'package:movietime/widgets/detailLayout.dart';
 import 'package:movietime/widgets/movieInfo.dart';
+import 'package:movietime/widgets/photos.dart';
+
 import 'package:movietime/widgets/storyline.dart';
-import 'package:readmore/readmore.dart';
 
 class MovieDetail extends StatefulWidget {
   final int id;
@@ -20,7 +23,7 @@ class MovieDetail extends StatefulWidget {
 }
 
 class _MovieDetailState extends State<MovieDetail> {
-  var res, movie;
+  var res, movie, recom;
   var providers;
   String image_url = 'https://image.tmdb.org/t/p/original';
   double rating;
@@ -40,11 +43,23 @@ class _MovieDetailState extends State<MovieDetail> {
         '?api_key=' +
         key +
         '&append_to_response=credits,watch/providers,images');
+
+    var rec = await https.get('https://api.themoviedb.org/3/movie/' +
+        widget.id.toString() +
+        '/recommendations?api_key=' +
+        key +
+        '&language=en-US&page=1');
+
+    recom = jsonDecode(rec.body)['results'];
+
     movie = jsonDecode(res.body);
+
     String poster = movie['poster_path'];
     String backdrop = movie['backdrop_path'];
+
     p = image_url + poster;
     b = image_url + backdrop;
+
     rating = movie['vote_average'];
     runtime = movie['runtime'];
 
@@ -194,6 +209,35 @@ class _MovieDetailState extends State<MovieDetail> {
                   MovieInfo(k: "Tagline: ", v: "${movie['tagline']}"),
                   SizedBox(height: 20.0),
                   StoryLine(storyline: movie['overview']),
+                  SizedBox(height: 16.0),
+                  MovieCast(
+                    title: "CAST",
+                    cast: movie['credits']['cast'],
+                    width: width,
+                    height: height,
+                    desig: false,
+                  ),
+                  SizedBox(height: 16.0),
+                  MovieCast(
+                    title: "CREW",
+                    cast: movie['credits']['crew'],
+                    width: width,
+                    height: height,
+                    desig: true,
+                  ),
+                  SizedBox(height: 16.0),
+                  Photos(
+                    photos: movie["images"]["backdrops"],
+                    width: width,
+                    height: height,
+                  ),
+                  Category(
+                    title: "RECOMMENDATIONS",
+                    popularMovies: recom,
+                    height: 210,
+                    width: 150,
+                    home: false,
+                  ),
                 ],
               ),
             ),
