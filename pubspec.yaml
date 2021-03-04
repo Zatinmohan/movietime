@@ -32,7 +32,7 @@ dependencies:
   http:
   font_awesome_flutter:
   readmore:
-  
+  shared_preferences:
   
 
 dev_dependencies:
