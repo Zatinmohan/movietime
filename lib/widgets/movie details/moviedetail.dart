@@ -3,15 +3,15 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
 import 'package:movietime/model/colordata.dart';
-import 'package:movietime/widgets/RowButtons.dart';
-import 'package:movietime/widgets/api_key.dart';
-import 'package:movietime/widgets/cast.dart';
-import 'package:movietime/widgets/colrow.dart';
-import 'package:movietime/widgets/detailLayout.dart';
-import 'package:movietime/widgets/movieInfo.dart';
-import 'package:movietime/widgets/photos.dart';
+import 'package:movietime/widgets/movie%20details/RowButtons.dart';
+import 'package:movietime/model/api_key.dart';
+import 'package:movietime/widgets/movie%20details/cast.dart';
+import 'package:movietime/widgets/categories/colrow.dart';
+import 'package:movietime/widgets/movie%20details/detailLayout.dart';
+import 'package:movietime/widgets/movie%20details/movieInfo.dart';
+import 'package:movietime/widgets/movie%20details/photos.dart';
 
-import 'package:movietime/widgets/storyline.dart';
+import 'package:movietime/widgets/movie%20details/storyline.dart';
 
 class MovieDetail extends StatefulWidget {
   final int id;
@@ -38,6 +38,7 @@ class _MovieDetailState extends State<MovieDetail> {
   }
 
   fetchData() async {
+    print(widget.id);
     res = await https.get('https://api.themoviedb.org/3/movie/' +
         widget.id.toString() +
         '?api_key=' +
@@ -57,8 +58,15 @@ class _MovieDetailState extends State<MovieDetail> {
     String poster = movie['poster_path'];
     String backdrop = movie['backdrop_path'];
 
-    p = image_url + poster;
-    b = image_url + backdrop;
+    if (poster != null || poster.length != 0)
+      p = image_url + poster;
+    else
+      p = null;
+
+    if (backdrop != null || backdrop.length != 0)
+      b = image_url + backdrop;
+    else
+      b = null;
 
     rating = movie['vote_average'];
     runtime = movie['runtime'];
@@ -68,14 +76,18 @@ class _MovieDetailState extends State<MovieDetail> {
       genreList.add(genre[i]['name'].toString());
     }
 
-    providers = movie["watch/providers"]["results"]["US"];
-
-    if (providers['flatrate'] == null)
-      providers = providers['rent'];
-    else if (providers['rent'] == null)
-      providers = providers['flatrate'];
-    else
+    providers = movie["watch/providers"]["results"];
+    if (providers["US"] == null)
       providers = null;
+    else {
+      providers = providers["US"];
+      if (providers['flatrate'] == null)
+        providers = providers['rent'];
+      else if (providers['rent'] == null)
+        providers = providers['flatrate'];
+      else
+        providers = null;
+    }
 
     setState(() {});
   }
@@ -98,7 +110,7 @@ class _MovieDetailState extends State<MovieDetail> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: p == null || b == null
+      body: movie == null
           ? CircularProgressIndicator()
           : SingleChildScrollView(
               child: Column(
@@ -122,7 +134,9 @@ class _MovieDetailState extends State<MovieDetail> {
                                   )
                                 ],
                                 image: DecorationImage(
-                                  image: NetworkImage(b),
+                                  image: b != null
+                                      ? NetworkImage(b)
+                                      : AssetImage('assets/nfound.png'),
                                   fit: BoxFit.cover,
                                 )),
                           ),
@@ -161,7 +175,7 @@ class _MovieDetailState extends State<MovieDetail> {
                                   ),
                                 ),
                               ),
-                              providers == null || providers.length == 0
+                              providers == null
                                   ? Text(
                                       "N/A",
                                       style: TextStyle(
@@ -210,34 +224,45 @@ class _MovieDetailState extends State<MovieDetail> {
                   SizedBox(height: 20.0),
                   StoryLine(storyline: movie['overview']),
                   SizedBox(height: 16.0),
-                  MovieCast(
-                    title: "CAST",
-                    cast: movie['credits']['cast'],
-                    width: width,
-                    height: height,
-                    desig: false,
-                  ),
+                  movie['credits']['cast'].length == null ||
+                          movie['credits']['cast'].length == 0
+                      ? SizedBox.shrink()
+                      : MovieCast(
+                          title: "CAST",
+                          cast: movie['credits']['cast'],
+                          width: width,
+                          height: height,
+                          desig: false,
+                        ),
                   SizedBox(height: 16.0),
-                  MovieCast(
-                    title: "CREW",
-                    cast: movie['credits']['crew'],
-                    width: width,
-                    height: height,
-                    desig: true,
-                  ),
+                  movie['credits']['crew'].length == null ||
+                          movie['credits']['crew'].length == 0
+                      ? SizedBox.shrink()
+                      : MovieCast(
+                          title: "CREW",
+                          cast: movie['credits']['crew'],
+                          width: width,
+                          height: height,
+                          desig: true,
+                        ),
                   SizedBox(height: 16.0),
-                  Photos(
-                    photos: movie["images"]["backdrops"],
-                    width: width,
-                    height: height,
-                  ),
-                  Category(
-                    title: "RECOMMENDATIONS",
-                    popularMovies: recom,
-                    height: 210,
-                    width: 150,
-                    home: false,
-                  ),
+                  movie["images"]["backdrops"] == null ||
+                          movie["images"]["backdrops"].length == 0
+                      ? SizedBox.shrink()
+                      : Photos(
+                          photos: movie["images"]["backdrops"],
+                          width: width,
+                          height: height,
+                        ),
+                  recom == null || recom.length == 0
+                      ? SizedBox.shrink()
+                      : Category(
+                          title: "RECOMMENDATIONS",
+                          popularMovies: recom,
+                          height: 210,
+                          width: 150,
+                          home: false,
+                        ),
                 ],
               ),
             ),

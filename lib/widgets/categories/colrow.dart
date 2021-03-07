@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movietime/model/colordata.dart';
-import 'package:movietime/widgets/moviedetail.dart';
+import 'package:movietime/widgets/movie%20details/moviedetail.dart';
 
 class Category extends StatelessWidget {
   final bool home;

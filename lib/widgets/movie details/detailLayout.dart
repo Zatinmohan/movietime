@@ -30,7 +30,9 @@ class DetailsAbove extends StatelessWidget {
               color: Colors.black,
               borderRadius: BorderRadius.circular(20.0),
               image: DecorationImage(
-                image: NetworkImage(image),
+                image: image == null
+                    ? AssetImage('assets/nfound.png')
+                    : NetworkImage(image),
                 fit: BoxFit.cover,
               )),
         ),
@@ -87,7 +89,7 @@ class WidgetDetail extends StatelessWidget {
 
   final double rating;
   final int runtime;
-
+  final String notAvailable = "N/A";
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -97,14 +99,14 @@ class WidgetDetail extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            '⭐ ${rating.toString()}',
+            rating != null ? '⭐ ${rating.toString()}' : '⭐ $notAvailable',
             style: TextStyle(
               color: Colors.blueGrey,
               fontSize: 16.0,
             ),
           ),
           Text(
-            '⏱️ $runtime min',
+            runtime != null ? '⏱️ $runtime min' : '⏱️ $notAvailable',
             style: TextStyle(
               fontSize: 15.0,
               color: Colors.blueGrey,

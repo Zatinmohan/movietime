@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class MovieInfo extends StatelessWidget {
   final String k, v;
-
   const MovieInfo({Key key, this.k, this.v}) : super(key: key);
   @override
   Widget build(BuildContext context) {

@@ -6,10 +6,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:movietime/model/navbar.dart';
 import 'package:movietime/model/sharedpref.dart';
-import 'package:movietime/widgets/api_key.dart';
+import 'package:movietime/model/api_key.dart';
 
-import 'package:movietime/widgets/colrow.dart';
-import 'package:movietime/widgets/topMovies.dart';
+import 'package:movietime/widgets/categories/colrow.dart';
+import 'package:movietime/widgets/movie%20details/moviedetail.dart';
+import 'package:movietime/widgets/movieFinder/search.dart';
+import 'package:movietime/widgets/movieFinder/search_result.dart';
+import 'package:movietime/widgets/categories/topMovies.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'model/colordata.dart';
@@ -92,7 +95,7 @@ class _MainPageState extends State<MainPage> {
                 size: 28.0,
               ),
               onPressed: () {
-                showSearch(context: context, delegate: SearchData());
+                showSearch(context: context, delegate: Search());
               }),
           IconButton(
               icon: Icon(Icons.person, size: 28.0),
@@ -141,66 +144,74 @@ class _MainPageState extends State<MainPage> {
   }
 }
 
-class SearchData extends SearchDelegate<String> {
-  List<String> movieHistory = [
-    "Avengers End Game",
-    "X-men Days of Future Past",
-  ];
-  SharedFiles obj;
+// class SearchData extends SearchDelegate<String> {
+//   List<String> movieHistory = [
+//     "Avengers End Game",
+//     "X-men Days of Future Past",
+//   ];
+//   SharedFiles obj;
 
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return [
-      IconButton(
-        icon: Icon(Icons.clear),
-        onPressed: () => query = '',
-      ),
-    ];
-  }
+//   @override
+//   List<Widget> buildActions(BuildContext context) {
+//     return [
+//       IconButton(
+//         icon: Icon(Icons.clear),
+//         onPressed: () => query = '',
+//       ),
+//     ];
+//   }
 
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-        icon: AnimatedIcon(
-          icon: AnimatedIcons.menu_arrow,
-          progress: transitionAnimation,
-        ),
-        onPressed: () => {close(context, null)});
-  }
+//   @override
+//   Widget buildLeading(BuildContext context) {
+//     return IconButton(
+//         icon: AnimatedIcon(
+//           icon: AnimatedIcons.menu_arrow,
+//           progress: transitionAnimation,
+//         ),
+//         onPressed: () => {close(context, null)});
+//   }
 
-  @override
-  Widget buildResults(BuildContext context) {
-    SharedFiles().start();
-    if (query != '') {
-      movieHistory.insert(0, query);
-      SharedFiles().setMovies(movieHistory);
-    }
+//   @override
+//   Widget buildResults(BuildContext context) {
+//     SharedFiles().start();
+//     if (query != '' && !movieHistory.contains(query)) {
+//       movieHistory.insert(0, query);
+//       SharedFiles().setMovies(movieHistory);
+//     }
 
-    return Text('No Data');
-  }
+//     return SearchResult(
+//       search: query,
+//     );
+//   }
 
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    if (SharedFiles().checkMovie()) movieHistory = SharedFiles().getMovies();
-    return ListView.builder(
-      itemCount: movieHistory.length,
-      itemBuilder: (BuildContext context, int index) {
-        return ListTile(
-          key: Key(movieHistory.length.toString()),
-          leading: Icon(Icons.history),
-          title: Text('${movieHistory[index]}',
-              style: TextStyle(
-                color: textColor,
-                fontSize: 20.0,
-              )),
-          trailing: IconButton(
-              icon: Icon(Icons.close),
-              onPressed: () {
-                movieHistory.removeAt(index);
-                SharedFiles().setMovies(movieHistory);
-              }),
-        );
-      },
-    );
-  }
-}
+//   @override
+//   Widget buildSuggestions(BuildContext context) {
+//     if (SharedFiles().checkMovie()) movieHistory = SharedFiles().getMovies();
+//     return ListView.builder(
+//       itemCount: movieHistory.length,
+//       itemBuilder: (BuildContext context, int index) {
+//         return GestureDetector(
+//           onTap: () {
+//             query = movieHistory[index];
+//             buildResults(context);
+//           },
+//           child: ListTile(
+//             key: Key(movieHistory.length.toString()),
+//             leading: Icon(Icons.history),
+//             title: Text('${movieHistory[index]}',
+//                 style: TextStyle(
+//                   color: textColor,
+//                   fontSize: 20.0,
+//                 )),
+//             trailing: IconButton(
+//                 icon: Icon(Icons.close),
+//                 onPressed: () {
+//                   movieHistory.removeAt(index);
+//                   SharedFiles().setMovies(movieHistory);
+//                 }),
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }

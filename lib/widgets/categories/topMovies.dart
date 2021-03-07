@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'moviedetail.dart';
+import '../movie details/moviedetail.dart';
 
 class TopMix extends StatelessWidget {
   final movieList;
