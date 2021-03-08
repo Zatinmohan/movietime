@@ -55,6 +55,8 @@ class MovieCast extends StatelessWidget {
                         MaterialPageRoute(
                             builder: (_) => PersonDetail(
                                   id: id,
+                                  height: height,
+                                  width: width,
                                 )));
                   },
                   child: Container(

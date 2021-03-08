@@ -3,16 +3,16 @@ import 'package:movietime/model/colordata.dart';
 import 'package:readmore/readmore.dart';
 
 class StoryLine extends StatelessWidget {
-  final String storyline;
+  final String storyline, k;
 
-  const StoryLine({Key key, this.storyline}) : super(key: key);
+  const StoryLine({Key key, this.storyline, this.k}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
-          'STORYLINE',
+          '$k',
           style: TextStyle(
             color: textColor,
             fontWeight: FontWeight.w600,

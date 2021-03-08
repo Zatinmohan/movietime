@@ -2,20 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:movietime/model/navbar.dart';
-import 'package:movietime/model/sharedpref.dart';
+
 import 'package:movietime/model/api_key.dart';
+import 'package:movietime/widgets/appbar.dart';
 
 import 'package:movietime/widgets/categories/colrow.dart';
-import 'package:movietime/widgets/movie%20details/moviedetail.dart';
-import 'package:movietime/widgets/movieFinder/search.dart';
-import 'package:movietime/widgets/movieFinder/search_result.dart';
-import 'package:movietime/widgets/categories/topMovies.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import 'model/colordata.dart';
+import 'package:movietime/widgets/categories/topMovies.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -71,75 +66,42 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       key: _scaffoldKey,
       drawer: NavBar(),
-      appBar: AppBar(
-        centerTitle: true,
-        elevation: 0,
-        leading: IconButton(
-            icon: Icon(
-              Icons.menu,
-              size: 28.0,
-            ),
-            onPressed: () {
-              _scaffoldKey.currentState.openDrawer();
-            }),
-        title: Text('movietime',
-            style: GoogleFonts.fredokaOne(
-              color: Color(0xfffb5558),
-              fontWeight: FontWeight.w500,
-              fontSize: 28.0,
+      appBar: CustomAppBar(scaffoldKey: _scaffoldKey),
+      body: resTrendingMovies == null ||
+              resPopularMovies == null ||
+              resinCinema == null ||
+              resUpcomming == null
+          ? Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
+              child: Column(
+              children: [
+                SizedBox(height: 10.0),
+                TopMix(movieList: trendingMovies), //Top Movie & series Section
+                SizedBox(height: 25.0),
+                Category(
+                  title: "MOST POPULAR MOVIES",
+                  popularMovies: popularMovies,
+                  width: 180.0,
+                  height: 250.0,
+                  home: true,
+                ),
+                SizedBox(height: 20.0),
+                Category(
+                  title: "NOW PLAYING",
+                  popularMovies: cinemaMovie,
+                  width: 280,
+                  height: 240,
+                  home: true,
+                ),
+                Category(
+                  title: "COMING SOON",
+                  popularMovies: upcommingMovies,
+                  width: 150,
+                  height: 200,
+                  home: true,
+                ),
+              ],
             )),
-        actions: [
-          IconButton(
-              icon: Icon(
-                Icons.search,
-                size: 28.0,
-              ),
-              onPressed: () {
-                showSearch(context: context, delegate: Search());
-              }),
-          IconButton(
-              icon: Icon(Icons.person, size: 28.0),
-              onPressed: () {
-                print("Profile");
-              }),
-        ],
-      ),
-      body: SingleChildScrollView(
-          child: resTrendingMovies == null ||
-                  resPopularMovies == null ||
-                  resinCinema == null ||
-                  resUpcomming == null
-              ? Center(child: CircularProgressIndicator())
-              : Column(
-                  children: [
-                    SizedBox(height: 10.0),
-                    TopMix(
-                        movieList: trendingMovies), //Top Movie & series Section
-                    SizedBox(height: 25.0),
-                    Category(
-                      title: "MOST POPULAR MOVIES",
-                      popularMovies: popularMovies,
-                      width: 180.0,
-                      height: 250.0,
-                      home: true,
-                    ),
-                    SizedBox(height: 20.0),
-                    Category(
-                      title: "NOW PLAYING",
-                      popularMovies: cinemaMovie,
-                      width: 280,
-                      height: 240,
-                      home: true,
-                    ),
-                    Category(
-                      title: "COMING SOON",
-                      popularMovies: upcommingMovies,
-                      width: 150,
-                      height: 200,
-                      home: true,
-                    ),
-                  ],
-                )),
     );
   }
 }

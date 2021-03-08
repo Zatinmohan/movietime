@@ -222,7 +222,10 @@ class _MovieDetailState extends State<MovieDetail> {
                   SizedBox(height: 8.0),
                   MovieInfo(k: "Tagline: ", v: "${movie['tagline']}"),
                   SizedBox(height: 20.0),
-                  StoryLine(storyline: movie['overview']),
+                  StoryLine(
+                    storyline: movie['overview'],
+                    k: "STORYLINE",
+                  ),
                   SizedBox(height: 16.0),
                   movie['credits']['cast'].length == null ||
                           movie['credits']['cast'].length == 0

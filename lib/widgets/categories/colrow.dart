@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movietime/model/colordata.dart';
 import 'package:movietime/widgets/movie%20details/moviedetail.dart';
+import 'package:movietime/widgets/categories/showall.dart';
 
 class Category extends StatelessWidget {
   final bool home;
@@ -33,11 +34,20 @@ class Category extends StatelessWidget {
                   fontWeight: FontWeight.w900,
                 )),
             home
-                ? Text('Show All',
-                    style: TextStyle(
-                      color: linkText,
-                      fontSize: 18.0,
-                    ))
+                ? GestureDetector(
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => ShowAll(
+                                  title: title,
+                                  movies: popularMovies,
+                                ))),
+                    child: Text('Show All',
+                        style: TextStyle(
+                          color: linkText,
+                          fontSize: 18.0,
+                        )),
+                  )
                 : SizedBox.shrink(),
           ],
         ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:movietime/model/colordata.dart';
 
+import '../image_view.dart';
+
 class Photos extends StatelessWidget {
   final url = "https://image.tmdb.org/t/p/original";
   final photos;
@@ -31,14 +33,18 @@ class Photos extends StatelessWidget {
                 return Padding(
                   padding:
                       EdgeInsets.only(right: 20.0, top: 20.0, bottom: 20.0),
-                  child: Container(
-                    width: width * 0.7,
-                    decoration: BoxDecoration(
-                      //color: Colors.blue,
-                      borderRadius: BorderRadius.circular(20.0),
-                      image: DecorationImage(
-                        image: NetworkImage('$url$img'),
-                        fit: BoxFit.cover,
+                  child: GestureDetector(
+                    onTap: () => Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => FullImage(img: img))),
+                    child: Container(
+                      width: width * 0.7,
+                      decoration: BoxDecoration(
+                        //color: Colors.blue,
+                        borderRadius: BorderRadius.circular(20.0),
+                        image: DecorationImage(
+                          image: NetworkImage('$url$img'),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
