@@ -52,16 +52,6 @@ class Search extends SearchDelegate<String> {
         return GestureDetector(
           onTap: () {
             query = movieHistory[index];
-            //buildResults(context);
-            // Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //         builder: (_) => SearchResult(
-            //               search: movieHistory[index],
-            //             )));
-            // return SearchResult(
-            //   search: movieHistory[index],
-            // );
           },
           child: ListTile(
             key: Key(movieHistory.length.toString()),

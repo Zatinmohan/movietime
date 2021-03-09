@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movietime/model/colordata.dart';
 import 'package:movietime/widgets/movie%20details/moviedetail.dart';
-import 'package:movietime/widgets/categories/showall.dart';
+import 'package:movietime/widgets/misc/showall.dart';
 
 class Category extends StatelessWidget {
   final bool home;
@@ -41,6 +41,7 @@ class Category extends StatelessWidget {
                             builder: (_) => ShowAll(
                                   title: title,
                                   movies: popularMovies,
+                                  check: true,
                                 ))),
                     child: Text('Show All',
                         style: TextStyle(

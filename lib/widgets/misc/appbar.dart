@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'movieFinder/search.dart';
+import '../movieFinder/search.dart';
 
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   final scaffoldKey;

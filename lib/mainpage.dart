@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:movietime/model/navbar.dart';
 
 import 'package:movietime/model/api_key.dart';
-import 'package:movietime/widgets/appbar.dart';
+import 'package:movietime/widgets/misc/appbar.dart';
 
 import 'package:movietime/widgets/categories/colrow.dart';
 

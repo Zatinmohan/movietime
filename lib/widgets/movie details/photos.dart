@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movietime/model/colordata.dart';
 
-import '../image_view.dart';
+import '../misc/image_view.dart';
 
 class Photos extends StatelessWidget {
   final url = "https://image.tmdb.org/t/p/original";

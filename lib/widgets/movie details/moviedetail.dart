@@ -58,12 +58,12 @@ class _MovieDetailState extends State<MovieDetail> {
     String poster = movie['poster_path'];
     String backdrop = movie['backdrop_path'];
 
-    if (poster != null || poster.length != 0)
+    if (poster != null)
       p = image_url + poster;
     else
       p = null;
 
-    if (backdrop != null || backdrop.length != 0)
+    if (backdrop != null)
       b = image_url + backdrop;
     else
       b = null;
@@ -227,8 +227,7 @@ class _MovieDetailState extends State<MovieDetail> {
                     k: "STORYLINE",
                   ),
                   SizedBox(height: 16.0),
-                  movie['credits']['cast'].length == null ||
-                          movie['credits']['cast'].length == 0
+                  movie['credits']['cast'].length == null
                       ? SizedBox.shrink()
                       : MovieCast(
                           title: "CAST",
@@ -238,8 +237,7 @@ class _MovieDetailState extends State<MovieDetail> {
                           desig: false,
                         ),
                   SizedBox(height: 16.0),
-                  movie['credits']['crew'].length == null ||
-                          movie['credits']['crew'].length == 0
+                  movie['credits']['crew'].length == null
                       ? SizedBox.shrink()
                       : MovieCast(
                           title: "CREW",
@@ -249,15 +247,14 @@ class _MovieDetailState extends State<MovieDetail> {
                           desig: true,
                         ),
                   SizedBox(height: 16.0),
-                  movie["images"]["backdrops"] == null ||
-                          movie["images"]["backdrops"].length == 0
+                  movie["images"]["backdrops"].length == 0
                       ? SizedBox.shrink()
                       : Photos(
                           photos: movie["images"]["backdrops"],
                           width: width,
                           height: height,
                         ),
-                  recom == null || recom.length == 0
+                  recom == null
                       ? SizedBox.shrink()
                       : Category(
                           title: "RECOMMENDATIONS",

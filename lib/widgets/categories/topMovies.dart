@@ -14,7 +14,7 @@ class TopMix extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(top: 10.0),
       //color: Colors.black,
-      height: MediaQuery.of(context).size.width * 0.75,
+      height: MediaQuery.of(context).size.width * 0.80,
       width: double.infinity,
       child: PageView.builder(
           controller: _controller,

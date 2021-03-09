@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
 
 import 'package:movietime/model/api_key.dart';
-import 'package:movietime/widgets/appbar.dart';
+import 'package:movietime/widgets/misc/appbar.dart';
 import 'package:movietime/widgets/movie%20details/photos.dart';
 import 'package:movietime/widgets/movie%20details/storyline.dart';
 import 'package:movietime/widgets/person/above.dart';
-import 'package:readmore/readmore.dart';
 
 class PersonDetail extends StatefulWidget {
   final String id;

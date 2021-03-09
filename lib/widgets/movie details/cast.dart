@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movietime/model/colordata.dart';
+import 'package:movietime/widgets/misc/showall.dart';
 import 'package:movietime/widgets/person/person_detail.dart';
 
 class MovieCast extends StatelessWidget {
@@ -30,11 +31,23 @@ class MovieCast extends StatelessWidget {
                   letterSpacing: 1.2,
                 ),
               ),
-              Text('See All',
-                  style: TextStyle(
-                    color: linkText,
-                    fontSize: 18.0,
-                  ))
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => ShowAll(
+                                check: false,
+                                title: title,
+                                movies: cast,
+                              )));
+                },
+                child: Text('See All',
+                    style: TextStyle(
+                      color: linkText,
+                      fontSize: 18.0,
+                    )),
+              ),
             ],
           ),
           SizedBox(height: 10.0),

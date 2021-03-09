@@ -20,7 +20,7 @@ class CastDetail extends StatelessWidget {
             text: "$v",
             style: TextStyle(
               color: Colors.grey,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w400,
               fontSize: height * 0.023,
             ))
       ]),
