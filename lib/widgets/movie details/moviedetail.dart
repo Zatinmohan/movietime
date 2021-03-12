@@ -17,6 +17,7 @@ import 'package:movietime/widgets/movie%20details/movieInfo.dart';
 import 'package:movietime/widgets/movie%20details/photos.dart';
 
 import 'package:movietime/widgets/movie%20details/storyline.dart';
+import 'package:movietime/widgets/movie%20details/streamServices.dart';
 
 class MovieDetail extends StatefulWidget {
   final int id;
@@ -34,26 +35,11 @@ class _MovieDetailState extends State<MovieDetail> {
   @override
   void initState() {
     super.initState();
-
+    print(widget.id);
     builder = APIManager().getDetails(widget.id.toString());
     recommendation = APIManager().getRecommendation(widget.id.toString());
     print(widget.id);
     setState(() {});
-  }
-
-  fetchData() {
-    // providers = movie["watch/providers"]["results"];
-    // if (providers["US"] == null)
-    //   providers = null;
-    // else {
-    //   providers = providers["US"];
-    //   if (providers['flatrate'] == null)
-    //     providers = providers['rent'];
-    //   else if (providers['rent'] == null)
-    //     providers = providers['flatrate'];
-    //   else
-    //     providers = null;
-    // }
   }
 
   String moneyCalculator(int budget) {
@@ -88,7 +74,11 @@ class _MovieDetailState extends State<MovieDetail> {
                     String poster = snapshot.data.posterPath;
                     List<Genre> genre = snapshot.data.genre;
                     //[TO DO!!!] Watchers
-                    //Results providers = snapshot.data.watchProviders.results;
+                    IN india = snapshot.data.watchProviders.results.india;
+                    List<Flatrate> providers;
+                    if (india != null)
+                      providers =
+                          snapshot.data.watchProviders.results.india.flatrate;
 
                     String releaseDate = snapshot.data.releaseDate;
                     int budget = snapshot.data.budget;
@@ -162,39 +152,20 @@ class _MovieDetailState extends State<MovieDetail> {
                                         ),
                                       ),
                                     ),
-                                    // snapshot.data.watchProviders.results == null || snapshot.data.watchProviders.results.us==null
-                                    //     ? Text(
-                                    //         "N/A",
-                                    //         style: TextStyle(
-                                    //           color: textColor,
-                                    //           fontWeight: FontWeight.w600,
-                                    //           fontSize: 20.0,
-                                    //         ),
-                                    //       )
-                                    //     : Container(
-                                    //         width: width,
-                                    //         height: 50.0,
-                                    //         //color: Colors.black,
-
-                                    //         child: ListView.builder(
-                                    //           scrollDirection: Axis.horizontal,
-                                    //           itemCount: providers.length,
-                                    //           itemBuilder:
-                                    //               (BuildContext context,
-                                    //                   int index) {
-                                    //             String path =
-                                    //                 "${URLs.imageURL}${providers[index].logoPath}";
-
-                                    //             return Container(
-                                    //               padding: EdgeInsets.all(8.0),
-                                    //               child: Image.network(
-                                    //                 '$path',
-                                    //                 height: 80.0,
-                                    //               ),
-                                    //             );
-                                    //           },
-                                    //         ),
-                                    //       ),
+                                    providers == null
+                                        ? Text(
+                                            "N/A",
+                                            style: TextStyle(
+                                              color: textColor,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 20.0,
+                                            ),
+                                          )
+                                        : Streaming(
+                                            height: height,
+                                            width: width,
+                                            providers: providers,
+                                          ),
                                   ],
                                 ),
                               ),

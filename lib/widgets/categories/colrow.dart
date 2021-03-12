@@ -61,89 +61,95 @@ class Category extends StatelessWidget {
           child: FutureBuilder<MovieModel>(
             future: movieBuilder,
             builder: (context, snapshot) {
-              if (snapshot.hasData && snapshot.data.results.length != 0) {
-                return ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: snapshot.data.results.length >= 6
-                      ? 6
-                      : snapshot.data.results.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    int id = snapshot.data.results[index].id;
-                    String poster = snapshot.data.results[index].posterPath;
-                    String title = snapshot.data.results[index].title;
-                    String rating;
-                    if (home)
-                      rating = '⭐  ' +
-                          snapshot.data.results[index].voteAverage.toString();
-                    else {
-                      rating = snapshot.data.results[index].releaseDate;
-                      rating = rating.substring(0, 4);
-                    }
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasData && snapshot.data.results.length != 0) {
+                  return ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: snapshot.data.results.length >= 6
+                        ? 6
+                        : snapshot.data.results.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      int id = snapshot.data.results[index].id;
+                      String poster = snapshot.data.results[index].posterPath;
+                      String title = snapshot.data.results[index].title;
+                      String rating;
+                      if (home)
+                        rating = '⭐  ' +
+                            snapshot.data.results[index].voteAverage.toString();
+                      else {
+                        rating = snapshot.data.results[index].releaseDate;
+                        rating = rating.substring(0, 4);
+                      }
 
-                    return GestureDetector(
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => MovieDetail(id: id))),
-                      child: Container(
-                        width: width,
-                        child: Stack(
-                          children: [
-                            Container(
-                              height: height,
-                              margin: EdgeInsets.only(right: 16.0, top: 5.0),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20.0),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: Offset(0.0, 3.0),
-                                      blurRadius: 6.0,
-                                      color: Colors.black26,
-                                    ),
-                                  ],
-                                  image: DecorationImage(
-                                    image:
-                                        NetworkImage('${URLs.imageURL}$poster'),
-                                    fit: BoxFit.fill,
-                                  )),
-                            ),
-                            Align(
-                              alignment: Alignment.bottomLeft,
-                              child: Padding(
-                                padding: EdgeInsets.only(left: 8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      '$title',
-                                      style: TextStyle(
-                                        color: textColor,
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w600,
+                      return GestureDetector(
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => MovieDetail(id: id))),
+                        child: Container(
+                          width: width,
+                          child: Stack(
+                            children: [
+                              Container(
+                                height: height,
+                                margin: EdgeInsets.only(right: 16.0, top: 5.0),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20.0),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        offset: Offset(0.0, 3.0),
+                                        blurRadius: 6.0,
+                                        color: Colors.black26,
                                       ),
-                                      overflow: TextOverflow.fade,
-                                      maxLines: 1,
-                                    ),
-                                    SizedBox(height: 3.0),
-                                    Text(
-                                      '$rating',
-                                      style: TextStyle(
-                                          color: Colors.blueGrey,
-                                          fontSize: 15.0),
-                                    )
-                                  ],
+                                    ],
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                          '${URLs.imageURL}$poster'),
+                                      fit: BoxFit.fill,
+                                    )),
+                              ),
+                              Align(
+                                alignment: Alignment.bottomLeft,
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 8.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        '$title',
+                                        style: TextStyle(
+                                          color: textColor,
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                        overflow: TextOverflow.fade,
+                                        maxLines: 1,
+                                      ),
+                                      SizedBox(height: 3.0),
+                                      Text(
+                                        '$rating',
+                                        style: TextStyle(
+                                            color: Colors.blueGrey,
+                                            fontSize: 15.0),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                );
+                      );
+                    },
+                  );
+                }
+              } else {
+                return Center(child: CircularProgressIndicator());
               }
+
               return Image.asset(
                 'assets/navailable.jpg',
                 scale: 4.0,

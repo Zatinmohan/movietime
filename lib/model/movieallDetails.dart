@@ -12,7 +12,7 @@ class MovieDetailModel {
     this.title,
     this.voteAverage,
     this.credits,
-    //this.watchProviders,
+    this.watchProviders,
     this.images,
     this.overview,
   });
@@ -30,7 +30,7 @@ class MovieDetailModel {
   String title;
   double voteAverage;
   Credits credits;
-  //WatchProviders watchProviders;
+  WatchProviders watchProviders;
   Images images;
 
   factory MovieDetailModel.fromJson(Map<String, dynamic> json) =>
@@ -48,7 +48,7 @@ class MovieDetailModel {
         title: json["title"],
         voteAverage: json["vote_average"].toDouble(),
         credits: Credits.fromJson(json["credits"]),
-        //watchProviders: WatchProviders.fromJson(json["watch/providers"]),
+        watchProviders: WatchProviders.fromJson(json["watch/providers"]),
         images: Images.fromJson(json["images"]),
       );
 
@@ -175,70 +175,69 @@ class Backdrop {
       };
 }
 
-// class WatchProviders {
-//   WatchProviders({
-//     this.results,
-//   });
+class WatchProviders {
+  WatchProviders({
+    this.results,
+  });
 
-//   Results results;
+  Results results;
 
-//   factory WatchProviders.fromJson(Map<String, dynamic> json) => WatchProviders(
-//         results: Results == null ? null : Results.fromJson(json["results"]),
-//       );
+  factory WatchProviders.fromJson(Map<String, dynamic> json) => WatchProviders(
+        results:
+            json["results"] != null ? Results.fromJson(json["results"]) : null,
+      );
 
-//   Map<String, dynamic> toJson() => {
-//         "results": results != null ? results.toJson() : null,
-//       };
-// }
+  Map<String, dynamic> toJson() => {
+        "results": results.toJson(),
+      };
+}
 
-// class Results {
-//   Results({
-//     this.us,
-//   });
+class Results {
+  Results({
+    this.india,
+  });
 
-//   Us us;
+  IN india;
 
-//   factory Results.fromJson(Map<String, dynamic> json) =>
-//       Results(us: Us == null ? null : Us.fromJson(json["US"]));
+  factory Results.fromJson(Map<String, dynamic> json) =>
+      Results(india: json["IN"] != null ? IN.fromJson(json["IN"]) : null);
 
-//   Map<String, dynamic> toJson() => {
-//         "US": us == null ? null : us.toJson(),
-//       };
-// }
+  Map<String, dynamic> toJson() => {
+        "US": india.toJson(),
+      };
+}
 
-// class Us {
-//   Us({
-//     this.flatrate,
-//   });
+class IN {
+  IN({
+    this.flatrate,
+  });
 
-//   List<Flatrate> flatrate;
+  List<Flatrate> flatrate;
 
-//   factory Us.fromJson(Map<String, dynamic> json) => Us(
-//         flatrate: json["flatrate"].length != 0
-//             ? List<Flatrate>.from(
-//                 json["flatrate"].map((x) => Flatrate.fromJson(x)))
-//             : null,
-//       );
+  factory IN.fromJson(Map<String, dynamic> json) => IN(
+        flatrate: json["flatrate"] == null
+            ? null
+            : List<Flatrate>.from(
+                json["flatrate"].map((x) => Flatrate.fromJson(x))),
+      );
 
-//   Map<String, dynamic> toJson() => {
-//         "flatrate": flatrate.length != 0
-//             ? List<dynamic>.from(flatrate.map((x) => x.toJson()))
-//             : null,
-//       };
-// }
+  Map<String, dynamic> toJson() => {
+        "flatrate": List<dynamic>.from(flatrate.map((x) => x.toJson())),
+      };
+}
 
-// class Flatrate {
-//   Flatrate({
-//     this.logoPath,
-//   });
+class Flatrate {
+  Flatrate({
+    this.logoPath,
+  });
 
-//   String logoPath;
+  String logoPath;
 
-//   factory Flatrate.fromJson(Map<String, dynamic> json) => Flatrate(
-//         logoPath: json["logo_path"],
-//       );
+  factory Flatrate.fromJson(Map<String, dynamic> json) => Flatrate(
+        logoPath: json["logo_path"],
+      );
 
-//   Map<String, dynamic> toJson() => {
-//         "logo_path": logoPath,
-//       };
-// }
+  Map<String, dynamic> toJson() => {
+        "logo_path": logoPath,
+      };
+}

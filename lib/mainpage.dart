@@ -31,40 +31,38 @@ class _MainPageState extends State<MainPage> {
       key: _scaffoldKey,
       drawer: NavBar(),
       appBar: CustomAppBar(scaffoldKey: _scaffoldKey),
-      body: valueList == null
-          ? Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
-              child: Column(
-              children: [
-                //SizedBox(height: 10.0),
-                TopMix(movieBuilder: valueList[0]), //Top Movie & series Section
+      body: SingleChildScrollView(
+          child: Column(
+        children: [
+          //SizedBox(height: 10.0),
+          TopMix(movieBuilder: valueList[0]), //Top Movie & series Section
 
-                SizedBox(height: 25.0),
+          SizedBox(height: 25.0),
 
-                Category(
-                  title: "MOST POPULAR MOVIES",
-                  movieBuilder: valueList[1],
-                  width: 180.0,
-                  height: 250.0,
-                  home: true,
-                ),
-                SizedBox(height: 20.0),
-                Category(
-                  title: "NOW PLAYING",
-                  movieBuilder: valueList[2],
-                  width: 280,
-                  height: 240,
-                  home: true,
-                ),
-                Category(
-                  title: "COMING SOON",
-                  movieBuilder: valueList[3],
-                  width: 150,
-                  height: 200,
-                  home: true,
-                ),
-              ],
-            )),
+          Category(
+            title: "MOST POPULAR MOVIES",
+            movieBuilder: valueList[1],
+            width: 180.0,
+            height: 250.0,
+            home: true,
+          ),
+          SizedBox(height: 20.0),
+          Category(
+            title: "NOW PLAYING",
+            movieBuilder: valueList[2],
+            width: 280,
+            height: 240,
+            home: true,
+          ),
+          Category(
+            title: "COMING SOON",
+            movieBuilder: valueList[3],
+            width: 150,
+            height: 200,
+            home: true,
+          ),
+        ],
+      )),
     );
   }
 }

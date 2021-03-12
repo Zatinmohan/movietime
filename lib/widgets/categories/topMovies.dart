@@ -20,34 +20,39 @@ class TopMix extends StatelessWidget {
       child: FutureBuilder<MovieModel>(
         future: movieBuilder,
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return PageView.builder(
-                controller: _controller,
-                itemCount: 6,
-                itemBuilder: (BuildContext context, int index) {
-                  String poster = snapshot.data.results[index].posterPath;
-                  int id = snapshot.data.results[index].id;
-                  return GestureDetector(
-                    onTap: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => MovieDetail(id: id))),
-                    child: Container(
-                      margin: EdgeInsets.all(8.0),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: Offset(0.0, 3.0),
-                              blurRadius: 6.0,
-                              color: Colors.black26,
-                            )
-                          ],
-                          image: DecorationImage(
-                            image: NetworkImage('${URLs.imageURL}$poster'),
-                            fit: BoxFit.fill,
-                          )),
-                    ),
-                  );
-                });
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasData) {
+              return PageView.builder(
+                  controller: _controller,
+                  itemCount: 6,
+                  itemBuilder: (BuildContext context, int index) {
+                    String poster = snapshot.data.results[index].posterPath;
+                    int id = snapshot.data.results[index].id;
+                    return GestureDetector(
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => MovieDetail(id: id))),
+                      child: Container(
+                        margin: EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.0),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: Offset(0.0, 3.0),
+                                blurRadius: 6.0,
+                                color: Colors.black26,
+                              )
+                            ],
+                            image: DecorationImage(
+                              image: NetworkImage('${URLs.imageURL}$poster'),
+                              fit: BoxFit.fill,
+                            )),
+                      ),
+                    );
+                  });
+            } else
+              return Container();
           }
           return Container();
         },
