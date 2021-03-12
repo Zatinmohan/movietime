@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:movietime/model/colordata.dart';
+import 'package:movietime/model/movieallDetails.dart';
+import 'package:movietime/model/url.dart';
 
 class DetailsAbove extends StatelessWidget {
   final String title;
   final double rating;
   final int runtime;
-  final List<String> genreList;
+  final List<Genre> genreList;
   final String image;
 
   const DetailsAbove(
@@ -32,7 +34,7 @@ class DetailsAbove extends StatelessWidget {
               image: DecorationImage(
                 image: image == null
                     ? AssetImage('assets/nfound.png')
-                    : NetworkImage(image),
+                    : NetworkImage("${URLs.imageURL}$image"),
                 fit: BoxFit.cover,
               )),
         ),
@@ -124,7 +126,7 @@ class WidgetGenre extends StatelessWidget {
     @required this.genreList,
   }) : super(key: key);
 
-  final List<String> genreList;
+  final List<Genre> genreList;
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +145,7 @@ class WidgetGenre extends StatelessWidget {
                 color: Color(0xffdcdcdc),
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              child: Center(child: Text('${genreList[index]}')),
+              child: Center(child: Text('${genreList[index].name}')),
             ),
           );
         },

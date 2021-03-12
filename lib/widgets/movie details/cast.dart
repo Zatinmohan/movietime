@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:movietime/model/colordata.dart';
-import 'package:movietime/widgets/misc/showall.dart';
+import 'package:movietime/model/movieallDetails.dart';
+import 'package:movietime/model/url.dart';
+import 'package:movietime/widgets/person/showcastall.dart';
 import 'package:movietime/widgets/person/person_detail.dart';
 
 class MovieCast extends StatelessWidget {
   final width, height, title;
   final bool desig;
-  final cast;
-  final String image_url = 'https://image.tmdb.org/t/p/original';
+  final List<Cast> cast;
 
   const MovieCast(
       {Key key, this.cast, this.width, this.height, this.desig, this.title})
@@ -36,10 +37,10 @@ class MovieCast extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (_) => ShowAll(
-                                check: false,
+                          builder: (_) => ShowCastAll(
+                                isCast: desig,
                                 title: title,
-                                movies: cast,
+                                castall: cast,
                               )));
                 },
                 child: Text('See All',
@@ -58,9 +59,10 @@ class MovieCast extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemCount: cast.length > 5 ? 5 : cast.length,
               itemBuilder: (BuildContext context, int index) {
-                String name = cast[index]['name'];
-                String img = cast[index]['profile_path'];
-                String id = cast[index]['id'].toString();
+                String name = cast[index].name;
+                String img = cast[index].profilePath;
+                String id = cast[index].id.toString();
+                String job = cast[index].job;
                 return GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -86,7 +88,7 @@ class MovieCast extends StatelessWidget {
                               radius: 32.0,
                               backgroundImage: img != null
                                   ? NetworkImage(
-                                      '$image_url$img',
+                                      '${URLs.imageURL}$img',
                                     )
                                   : AssetImage(
                                       'assets/user.png',
@@ -106,7 +108,7 @@ class MovieCast extends StatelessWidget {
                           ),
                           desig
                               ? Text(
-                                  "${cast[index]['job']}",
+                                  "$job",
                                   style: TextStyle(
                                     color: Colors.grey,
                                     fontWeight: FontWeight.w600,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:movietime/model/colordata.dart';
+import 'package:movietime/model/url.dart';
 
 import '../misc/image_view.dart';
 
 class Photos extends StatelessWidget {
-  final url = "https://image.tmdb.org/t/p/original";
   final photos;
   final width, height;
   const Photos({Key key, this.photos, this.width, this.height})
@@ -29,7 +29,7 @@ class Photos extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemCount: photos.length > 5 ? 5 : photos.length,
               itemBuilder: (BuildContext context, int index) {
-                String img = photos[index]["file_path"];
+                String img = URLs.imageURL + photos[index].filePath;
                 return Padding(
                   padding:
                       EdgeInsets.only(right: 20.0, top: 20.0, bottom: 20.0),
@@ -42,7 +42,7 @@ class Photos extends StatelessWidget {
                         //color: Colors.blue,
                         borderRadius: BorderRadius.circular(20.0),
                         image: DecorationImage(
-                          image: NetworkImage('$url$img'),
+                          image: NetworkImage('$img'),
                           fit: BoxFit.cover,
                         ),
                       ),

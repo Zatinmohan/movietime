@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:movietime/model/colordata.dart';
+import 'package:movietime/model/movieModel.dart';
+import 'package:movietime/model/url.dart';
+import 'package:movietime/widgets/movie%20details/showAllMovies.dart';
 import 'package:movietime/widgets/movie%20details/moviedetail.dart';
-import 'package:movietime/widgets/misc/showall.dart';
 
 class Category extends StatelessWidget {
   final bool home;
-  final popularMovies;
+  final Future<MovieModel> movieBuilder;
   final double width, height;
-  final String url = 'https://image.tmdb.org/t/p/original';
   final String title;
+
   const Category({
     Key key,
-    this.popularMovies,
     this.title,
     this.width,
     this.height,
     this.home,
+    this.movieBuilder,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,7 @@ class Category extends StatelessWidget {
                         MaterialPageRoute(
                             builder: (_) => ShowAll(
                                   title: title,
-                                  movies: popularMovies,
+                                  movies: movieBuilder,
                                   check: true,
                                 ))),
                     child: Text('Show All',
@@ -56,22 +58,25 @@ class Category extends StatelessWidget {
         Container(
           //color: Colors.black,
           height: height + 50.0,
-          child: popularMovies.length == 0 || popularMovies == null
-              ? Image(image: AssetImage('assets/navailable.jpg'))
-              : ListView.builder(
+          child: FutureBuilder<MovieModel>(
+            future: movieBuilder,
+            builder: (context, snapshot) {
+              if (snapshot.hasData && snapshot.data.results.length != 0) {
+                return ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount:
-                      popularMovies.length > 7 ? 6 : popularMovies.length,
+                  itemCount: snapshot.data.results.length >= 6
+                      ? 6
+                      : snapshot.data.results.length,
                   itemBuilder: (BuildContext context, int index) {
-                    int id = popularMovies[index]['id'];
-                    String poster = popularMovies[index]['poster_path'];
-                    String title = popularMovies[index]['title'];
+                    int id = snapshot.data.results[index].id;
+                    String poster = snapshot.data.results[index].posterPath;
+                    String title = snapshot.data.results[index].title;
                     String rating;
                     if (home)
                       rating = '⭐  ' +
-                          popularMovies[index]['vote_average'].toString();
+                          snapshot.data.results[index].voteAverage.toString();
                     else {
-                      rating = popularMovies[index]['release_date'];
+                      rating = snapshot.data.results[index].releaseDate;
                       rating = rating.substring(0, 4);
                     }
 
@@ -98,7 +103,8 @@ class Category extends StatelessWidget {
                                     ),
                                   ],
                                   image: DecorationImage(
-                                    image: NetworkImage('$url$poster'),
+                                    image:
+                                        NetworkImage('${URLs.imageURL}$poster'),
                                     fit: BoxFit.fill,
                                   )),
                             ),
@@ -136,7 +142,14 @@ class Category extends StatelessWidget {
                       ),
                     );
                   },
-                ),
+                );
+              }
+              return Image.asset(
+                'assets/navailable.jpg',
+                scale: 4.0,
+              );
+            },
+          ),
         ),
       ]),
     );

@@ -1,10 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:movietime/model/api.dart';
 import 'package:movietime/model/colordata.dart';
-
-import '../../model/api_key.dart';
+import 'package:movietime/model/movieModel.dart';
+import 'package:movietime/model/url.dart';
 import '../movie details/moviedetail.dart';
 
 class SearchResult extends StatefulWidget {
@@ -16,45 +14,36 @@ class SearchResult extends StatefulWidget {
 }
 
 class _SearchResultState extends State<SearchResult> {
-  var result;
-  final url = "https://api.themoviedb.org/3/search/movie?api_key=";
-  final iURL = "https://image.tmdb.org/t/p/original";
-
+  Future<MovieModel> builder;
   @override
   void initState() {
-    fetchData();
-
     super.initState();
-  }
-
-  fetchData() async {
-    var r = await http.get(url +
-        key +
-        '&language=en-US&page=1&include_adult=true&query=' +
-        widget.search);
-    result = jsonDecode(r.body)['results'];
+    builder = APIManager().searchMovies(widget.search);
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return result == null
-        ? Center(child: CircularProgressIndicator())
-        : new Material(
-            child: ListView.builder(
-              itemCount: result.length,
+    return Material(
+      child: FutureBuilder<MovieModel>(
+        future: builder,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemCount: snapshot.data.results.length,
               itemBuilder: (BuildContext context, int index) {
-                String name = result[index]['title'];
-                String image = result[index]['poster_path'];
+                String name = snapshot.data.results[index].title;
 
-                String date = result[index]['release_date'];
-                int id = result[index]['id'];
+                String image = snapshot.data.results[index].posterPath;
+
+                String date = snapshot.data.results[index].releaseDate;
+                int id = snapshot.data.results[index].id;
 
                 if (date != null)
                   date = date.substring(0, 4);
                 else
                   date = "N/A";
-                // print("LENGTH: ${result.length}}");
+
                 return GestureDetector(
                   onTap: () {
                     Navigator.push(context,
@@ -64,7 +53,7 @@ class _SearchResultState extends State<SearchResult> {
                     leading: image == null
                         ? Image.asset('assets/nfound.png')
                         : Image.network(
-                            '$iURL$image',
+                            '${URLs.imageURL}$image',
                           ),
                     title: Text(
                       '$name',
@@ -80,7 +69,12 @@ class _SearchResultState extends State<SearchResult> {
                   ),
                 );
               },
-            ),
-          );
+            );
+          }
+          if (snapshot.hasError) return Text("Error");
+          return Text("Blank");
+        },
+      ),
+    );
   }
 }

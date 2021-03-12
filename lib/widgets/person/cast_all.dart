@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:movietime/model/url.dart';
 import 'package:movietime/widgets/person/person_detail.dart';
 
 class AllCast extends StatelessWidget {
   final id, path, name, role;
-  final String image_url = 'https://image.tmdb.org/t/p/original';
   const AllCast({Key key, this.id, this.path, this.name, this.role})
       : super(key: key);
   @override
@@ -21,7 +21,7 @@ class AllCast extends StatelessWidget {
         CircleAvatar(
           radius: MediaQuery.of(context).size.width * 0.20,
           backgroundImage: path != null
-              ? NetworkImage('$image_url$path')
+              ? NetworkImage('${URLs.imageURL}$path')
               : AssetImage('assets/nfound.png'),
         ),
         SizedBox(height: 8.0),

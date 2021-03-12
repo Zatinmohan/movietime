@@ -3,7 +3,6 @@ import 'package:movietime/widgets/movie%20details/moviedetail.dart';
 
 class MoviesAll extends StatelessWidget {
   final id, path, name;
-  final String image_url = 'https://image.tmdb.org/t/p/original';
   const MoviesAll({Key key, this.id, this.path, this.name}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -26,7 +25,7 @@ class MoviesAll extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),
-                child: Image.network('$image_url$path'),
+                child: Image.network('$path'),
               ),
             ),
             SizedBox(height: 5.0),

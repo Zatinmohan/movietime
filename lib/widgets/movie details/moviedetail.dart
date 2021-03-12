@@ -2,11 +2,16 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
+import 'package:movietime/model/api.dart';
 import 'package:movietime/model/colordata.dart';
+import 'package:movietime/model/movieModel.dart';
+import 'package:movietime/model/movieallDetails.dart';
+import 'package:movietime/model/url.dart';
+import 'package:movietime/widgets/categories/colrow.dart';
 import 'package:movietime/widgets/movie%20details/RowButtons.dart';
 import 'package:movietime/model/api_key.dart';
 import 'package:movietime/widgets/movie%20details/cast.dart';
-import 'package:movietime/widgets/categories/colrow.dart';
+
 import 'package:movietime/widgets/movie%20details/detailLayout.dart';
 import 'package:movietime/widgets/movie%20details/movieInfo.dart';
 import 'package:movietime/widgets/movie%20details/photos.dart';
@@ -23,73 +28,32 @@ class MovieDetail extends StatefulWidget {
 }
 
 class _MovieDetailState extends State<MovieDetail> {
-  var res, movie, recom;
-  var providers;
-  String image_url = 'https://image.tmdb.org/t/p/original';
-  double rating;
-  List<String> genreList = new List();
-  int runtime;
-  String p, b;
-  Map<dynamic, dynamic> watch;
+  Future<MovieDetailModel> builder;
+  Future<MovieModel> recommendation;
+
   @override
   void initState() {
     super.initState();
-    fetchData();
+
+    builder = APIManager().getDetails(widget.id.toString());
+    recommendation = APIManager().getRecommendation(widget.id.toString());
+    print(widget.id);
+    setState(() {});
   }
 
-  fetchData() async {
-    print(widget.id);
-    res = await https.get('https://api.themoviedb.org/3/movie/' +
-        widget.id.toString() +
-        '?api_key=' +
-        key +
-        '&append_to_response=credits,watch/providers,images');
-
-    var rec = await https.get('https://api.themoviedb.org/3/movie/' +
-        widget.id.toString() +
-        '/recommendations?api_key=' +
-        key +
-        '&language=en-US&page=1');
-
-    recom = jsonDecode(rec.body)['results'];
-
-    movie = jsonDecode(res.body);
-
-    String poster = movie['poster_path'];
-    String backdrop = movie['backdrop_path'];
-
-    if (poster != null)
-      p = image_url + poster;
-    else
-      p = null;
-
-    if (backdrop != null)
-      b = image_url + backdrop;
-    else
-      b = null;
-
-    rating = movie['vote_average'];
-    runtime = movie['runtime'];
-
-    var genre = movie['genres'];
-    for (int i = 0; i < genre.length; i++) {
-      genreList.add(genre[i]['name'].toString());
-    }
-
-    providers = movie["watch/providers"]["results"];
-    if (providers["US"] == null)
-      providers = null;
-    else {
-      providers = providers["US"];
-      if (providers['flatrate'] == null)
-        providers = providers['rent'];
-      else if (providers['rent'] == null)
-        providers = providers['flatrate'];
-      else
-        providers = null;
-    }
-
-    setState(() {});
+  fetchData() {
+    // providers = movie["watch/providers"]["results"];
+    // if (providers["US"] == null)
+    //   providers = null;
+    // else {
+    //   providers = providers["US"];
+    //   if (providers['flatrate'] == null)
+    //     providers = providers['rent'];
+    //   else if (providers['rent'] == null)
+    //     providers = providers['flatrate'];
+    //   else
+    //     providers = null;
+    // }
   }
 
   String moneyCalculator(int budget) {
@@ -110,160 +74,188 @@ class _MovieDetailState extends State<MovieDetail> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: movie == null
-          ? CircularProgressIndicator()
+      body: builder == null
+          ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    height: height * 0.65,
-                    //color: Colors.blue,
-                    child: Stack(
+              child: FutureBuilder<MovieDetailModel>(
+                future: builder,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    String backdrop = snapshot.data.backdropPath;
+                    String title = snapshot.data.title;
+                    int runtime = snapshot.data.runtime;
+                    double rating = snapshot.data.voteAverage;
+                    String poster = snapshot.data.posterPath;
+                    List<Genre> genre = snapshot.data.genre;
+                    //[TO DO!!!] Watchers
+                    //Results providers = snapshot.data.watchProviders.results;
+
+                    String releaseDate = snapshot.data.releaseDate;
+                    int budget = snapshot.data.budget;
+                    int revenue = snapshot.data.revenue;
+                    String tagline = snapshot.data.tagline;
+                    String overview = snapshot.data.overview;
+                    List<Cast> cast = snapshot.data.credits.cast;
+                    List<Cast> crew = snapshot.data.credits.crew;
+                    List<Backdrop> backdrops = snapshot.data.images.backdrops;
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        ClipPath(
-                          clipper: SemiCircle(),
-                          child: Container(
-                            height: height * 0.45,
-                            decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    offset: Offset(0.0, 3.0),
-                                    blurRadius: 6.0,
-                                    color: Colors.black26,
-                                  )
-                                ],
-                                image: DecorationImage(
-                                  image: b != null
-                                      ? NetworkImage(b)
-                                      : AssetImage('assets/nfound.png'),
-                                  fit: BoxFit.cover,
-                                )),
-                          ),
-                        ),
-                        UpperToolbar(),
-                        Positioned(
-                          top: height * 0.28,
-                          width: width - 5,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: DetailsAbove(
-                              title: movie['title'],
-                              runtime: runtime,
-                              rating: rating,
-                              image: p,
-                              genreList: genreList,
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          top: height * 0.57,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                        Container(
+                          height: height * 0.65,
+                          //color: Colors.blue,
+                          child: Stack(
                             children: [
-                              Padding(
-                                padding:
-                                    EdgeInsets.only(left: 20.0, right: 10.0),
-                                child: Text(
-                                  'Available on: ',
-                                  style: TextStyle(
-                                    color: textColor,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 20.0,
+                              ClipPath(
+                                clipper: SemiCircle(),
+                                child: Container(
+                                  height: height * 0.45,
+                                  decoration: BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          offset: Offset(0.0, 3.0),
+                                          blurRadius: 6.0,
+                                          color: Colors.black26,
+                                        )
+                                      ],
+                                      image: DecorationImage(
+                                        image: backdrop != null
+                                            ? NetworkImage(
+                                                "${URLs.imageURL}$backdrop")
+                                            : AssetImage('assets/nfound.png'),
+                                        fit: BoxFit.cover,
+                                      )),
+                                ),
+                              ),
+                              UpperToolbar(),
+                              Positioned(
+                                top: height * 0.28,
+                                width: width - 5,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0),
+                                  child: DetailsAbove(
+                                    title: title,
+                                    runtime: runtime,
+                                    rating: rating,
+                                    image: poster,
+                                    genreList: genre,
                                   ),
                                 ),
                               ),
-                              providers == null
-                                  ? Text(
-                                      "N/A",
-                                      style: TextStyle(
-                                        color: textColor,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 20.0,
-                                      ),
-                                    )
-                                  : Container(
-                                      width: width,
-                                      height: 50.0,
-                                      //color: Colors.black,
-
-                                      child: ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: providers.length,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          String path = providers[index]
-                                                  ['logo_path']
-                                              .toString();
-                                          return Container(
-                                            padding: EdgeInsets.all(8.0),
-                                            child: Image.network(
-                                              '$image_url$path',
-                                              height: 80.0,
-                                            ),
-                                          );
-                                        },
+                              Positioned(
+                                top: height * 0.57,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 20.0, right: 10.0),
+                                      child: Text(
+                                        'Available on: ',
+                                        style: TextStyle(
+                                          color: textColor,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 20.0,
+                                        ),
                                       ),
                                     ),
+                                    // snapshot.data.watchProviders.results == null || snapshot.data.watchProviders.results.us==null
+                                    //     ? Text(
+                                    //         "N/A",
+                                    //         style: TextStyle(
+                                    //           color: textColor,
+                                    //           fontWeight: FontWeight.w600,
+                                    //           fontSize: 20.0,
+                                    //         ),
+                                    //       )
+                                    //     : Container(
+                                    //         width: width,
+                                    //         height: 50.0,
+                                    //         //color: Colors.black,
+
+                                    //         child: ListView.builder(
+                                    //           scrollDirection: Axis.horizontal,
+                                    //           itemCount: providers.length,
+                                    //           itemBuilder:
+                                    //               (BuildContext context,
+                                    //                   int index) {
+                                    //             String path =
+                                    //                 "${URLs.imageURL}${providers[index].logoPath}";
+
+                                    //             return Container(
+                                    //               padding: EdgeInsets.all(8.0),
+                                    //               child: Image.network(
+                                    //                 '$path',
+                                    //                 height: 80.0,
+                                    //               ),
+                                    //             );
+                                    //           },
+                                    //         ),
+                                    //       ),
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  MovieInfo(k: "Release date:", v: "${movie['release_date']}"),
-                  SizedBox(height: 8.0),
-                  MovieInfo(k: "Budget:", v: moneyCalculator(movie['budget'])),
-                  SizedBox(height: 8.0),
-                  MovieInfo(
-                      k: "Box Office:", v: moneyCalculator(movie['revenue'])),
-                  SizedBox(height: 8.0),
-                  MovieInfo(k: "Tagline: ", v: "${movie['tagline']}"),
-                  SizedBox(height: 20.0),
-                  StoryLine(
-                    storyline: movie['overview'],
-                    k: "STORYLINE",
-                  ),
-                  SizedBox(height: 16.0),
-                  movie['credits']['cast'].length == null
-                      ? SizedBox.shrink()
-                      : MovieCast(
-                          title: "CAST",
-                          cast: movie['credits']['cast'],
-                          width: width,
-                          height: height,
-                          desig: false,
+                        MovieInfo(
+                            k: "Release date:",
+                            v: "${releaseDate.split('-').reversed.join('-')}"),
+                        SizedBox(height: 8.0),
+                        MovieInfo(k: "Budget:", v: moneyCalculator(budget)),
+                        SizedBox(height: 8.0),
+                        MovieInfo(
+                            k: "Box Office:", v: moneyCalculator(revenue)),
+                        SizedBox(height: 8.0),
+                        MovieInfo(k: "Tagline: ", v: "$tagline"),
+                        SizedBox(height: 20.0),
+                        StoryLine(
+                          storyline: overview,
+                          k: "STORYLINE",
                         ),
-                  SizedBox(height: 16.0),
-                  movie['credits']['crew'].length == null
-                      ? SizedBox.shrink()
-                      : MovieCast(
-                          title: "CREW",
-                          cast: movie['credits']['crew'],
-                          width: width,
-                          height: height,
-                          desig: true,
-                        ),
-                  SizedBox(height: 16.0),
-                  movie["images"]["backdrops"].length == 0
-                      ? SizedBox.shrink()
-                      : Photos(
-                          photos: movie["images"]["backdrops"],
-                          width: width,
-                          height: height,
-                        ),
-                  recom == null
-                      ? SizedBox.shrink()
-                      : Category(
+                        SizedBox(height: 16.0),
+                        cast.length == null
+                            ? SizedBox.shrink()
+                            : MovieCast(
+                                title: "CAST",
+                                cast: cast,
+                                width: width,
+                                height: height,
+                                desig: false,
+                              ),
+                        SizedBox(height: 16.0),
+                        crew.length == null
+                            ? SizedBox.shrink()
+                            : MovieCast(
+                                title: "CREW",
+                                cast: crew,
+                                width: width,
+                                height: height,
+                                desig: true,
+                              ),
+                        SizedBox(height: 16.0),
+                        backdrops.length == 0
+                            ? SizedBox.shrink()
+                            : Photos(
+                                photos: backdrops,
+                                width: width,
+                                height: height,
+                              ),
+                        Category(
                           title: "RECOMMENDATIONS",
-                          popularMovies: recom,
+                          movieBuilder: recommendation,
                           height: 210,
                           width: 150,
                           home: false,
                         ),
-                ],
+                      ],
+                    );
+                  }
+                  return CircularProgressIndicator();
+                },
               ),
             ),
     );

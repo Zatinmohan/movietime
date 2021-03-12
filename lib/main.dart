@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'mainpage.dart';
-import 'model/sharedpref.dart';
+import 'widgets/misc/sharedpref.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:movietime/widgets/misc/appbar.dart';
-import 'package:movietime/widgets/misc/cast_all.dart';
-import 'package:movietime/widgets/misc/movies_all.dart';
+import 'package:movietime/model/movieallDetails.dart';
+import 'package:movietime/widgets/person/cast_all.dart';
 
-class ShowAll extends StatelessWidget {
-  final title, movies;
-  final bool check;
+import '../misc/appbar.dart';
 
-  //final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  ShowAll({Key key, this.title, this.movies, this.check}) : super(key: key);
+class ShowCastAll extends StatelessWidget {
+  final title;
+  final List<Cast> castall;
+  final bool isCast;
+
+  const ShowCastAll({Key key, this.title, this.castall, this.isCast})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +35,7 @@ class ShowAll extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '${movies.length}',
+                  '${castall.length}',
                   style: TextStyle(
                     fontSize: 16.0,
                   ),
@@ -43,7 +45,7 @@ class ShowAll extends StatelessWidget {
             SizedBox(height: 10.0),
             Expanded(
               child: GridView.builder(
-                  itemCount: movies.length,
+                  itemCount: castall.length,
                   gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: MediaQuery.of(context).size.width * 0.5,
                     crossAxisSpacing: 5.0,
@@ -51,29 +53,21 @@ class ShowAll extends StatelessWidget {
                     childAspectRatio: 3 / 4.8,
                   ),
                   itemBuilder: (BuildContext context, int index) {
-                    int id = movies[index]['id'];
+                    int id = castall[index].id;
 
-                    String path = check
-                        ? movies[index]["poster_path"]
-                        : movies[index]["profile_path"];
-                    String name =
-                        check ? movies[index]["title"] : movies[index]["name"];
-                    String character = movies[index]["character"] != null
-                        ? movies[index]["character"]
-                        : movies[index]["job"];
+                    String path = castall[index].profilePath;
 
-                    return check
-                        ? MoviesAll(
-                            path: path,
-                            name: name,
-                            id: id,
-                          )
-                        : AllCast(
-                            path: path,
-                            id: id,
-                            name: name,
-                            role: character,
-                          );
+                    String character =
+                        !isCast ? castall[index].character : castall[index].job;
+
+                    String name = castall[index].name;
+
+                    return AllCast(
+                      path: path,
+                      id: id,
+                      role: character,
+                      name: name,
+                    );
                   }),
             ),
           ],

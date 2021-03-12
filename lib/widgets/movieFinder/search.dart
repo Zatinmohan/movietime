@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movietime/model/colordata.dart';
-import 'package:movietime/model/sharedpref.dart';
+import 'package:movietime/widgets/misc/sharedpref.dart';
 import 'package:movietime/widgets/movieFinder/search_result.dart';
 
 class Search extends SearchDelegate<String> {

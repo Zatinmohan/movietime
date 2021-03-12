@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:movietime/model/url.dart';
 import 'package:movietime/widgets/person/cast_detail.dart';
 
 class CastAbove extends StatelessWidget {
-  final result;
+  //final result;
+  final String name, dob, dod, dept, pob, profile;
   final height, width;
-  final url = 'https://image.tmdb.org/t/p/original';
 
-  const CastAbove({Key key, this.result, this.height, this.width})
-      : super(key: key);
+  const CastAbove({
+    Key key,
+    //this.result,
+    this.height,
+    this.width,
+    this.name,
+    this.dob,
+    this.dod,
+    this.dept,
+    this.pob,
+    this.profile,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -18,9 +29,9 @@ class CastAbove extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: width * 0.17,
-              backgroundImage: result['profile_path'] != null
+              backgroundImage: profile != null
                   ? NetworkImage(
-                      '$url${result['profile_path']}',
+                      '${URLs.imageURL}$profile',
                     )
                   : AssetImage('assets/nfound.png'),
             ),
@@ -31,7 +42,7 @@ class CastAbove extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${result['name']}',
+                        '$name',
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w600,
@@ -39,7 +50,7 @@ class CastAbove extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '${result['known_for_department']}',
+                        '$dept',
                         style: TextStyle(
                           color: Colors.grey,
                           fontWeight: FontWeight.w600,
@@ -53,30 +64,22 @@ class CastAbove extends StatelessWidget {
                           CastDetail(
                             height: height,
                             k: "Date of birth: ",
-                            v: result['birthday'] != null
-                                ? result['birthday']
-                                    .split('-')
-                                    .reversed
-                                    .join('-')
+                            v: dob != null
+                                ? dob.split('-').reversed.join('-')
                                 : "N/A",
                           ),
                           SizedBox(height: 5.0),
                           CastDetail(
                             height: height,
                             k: "Place of birth: ",
-                            v: result['place_of_birth'] != null
-                                ? result['place_of_birth']
-                                : "N/A",
+                            v: pob != null ? pob : "N/A",
                           ),
                           SizedBox(height: 8.0),
-                          result['deathday'] != null
+                          dod != null
                               ? CastDetail(
                                   height: height,
                                   k: "Death: ",
-                                  v: result['deathday']
-                                      .split('-')
-                                      .reversed
-                                      .join('-'),
+                                  v: dod.split('-').reversed.join('-'),
                                 )
                               : SizedBox.shrink(),
                         ],
