@@ -110,4 +110,14 @@ class APIManager {
     }
     return _movieModel;
   }
+
+  Future<CastModel> popularPeople() async {
+    try {
+      var response = await http.get(URLs.popularCelebrities());
+      checkPerson(response);
+    } catch (Exception) {
+      return null;
+    }
+    return _movieModel;
+  }
 }

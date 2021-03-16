@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movietime/widgets/splash.dart';
 
 import 'mainpage.dart';
 import 'widgets/misc/sharedpref.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         textTheme: GoogleFonts.robotoTextTheme(Theme.of(context).textTheme),
       ),
-      home: MainPage(),
+      home: SplashScreen(),
     );
   }
 }

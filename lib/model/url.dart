@@ -14,6 +14,9 @@ class URLs {
   static String _upcoming =
       "https://api.themoviedb.org/3/movie/upcoming?api_key=";
 
+  static String _popularPeople =
+      "https://api.themoviedb.org/3/person/popular?api_key=";
+
   static String getRecommendation(String id) {
     return _baseURL +
         "movie/" +
@@ -65,5 +68,9 @@ class URLs {
         key +
         "&language=en-US&page=1&include_adult=true&query=" +
         query;
+  }
+
+  static String popularCelebrities() {
+    return _popularPeople + key + "&language=en-US&page=1";
   }
 }
