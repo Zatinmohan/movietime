@@ -33,6 +33,10 @@ dependencies:
   font_awesome_flutter:
   readmore:
   shared_preferences:
+  firebase_auth:
+  firebase_core:
+  cloud_firestore:
+  provider:
   
 
 dev_dependencies:

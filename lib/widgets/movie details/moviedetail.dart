@@ -1,15 +1,12 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as https;
-import 'package:movietime/model/api.dart';
+import 'package:movietime/api/api.dart';
 import 'package:movietime/model/colordata.dart';
 import 'package:movietime/model/movieModel.dart';
 import 'package:movietime/model/movieallDetails.dart';
-import 'package:movietime/model/url.dart';
+import 'package:movietime/api/url.dart';
 import 'package:movietime/widgets/categories/colrow.dart';
 import 'package:movietime/widgets/movie%20details/RowButtons.dart';
-import 'package:movietime/model/api_key.dart';
+
 import 'package:movietime/widgets/movie%20details/cast.dart';
 
 import 'package:movietime/widgets/movie%20details/detailLayout.dart';
@@ -73,7 +70,6 @@ class _MovieDetailState extends State<MovieDetail> {
                     double rating = snapshot.data.voteAverage;
                     String poster = snapshot.data.posterPath;
                     List<Genre> genre = snapshot.data.genre;
-                    //[TO DO!!!] Watchers
                     IN india = snapshot.data.watchProviders.results.india;
                     List<Flatrate> providers;
                     if (india != null)

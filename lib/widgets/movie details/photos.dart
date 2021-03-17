@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movietime/model/colordata.dart';
-import 'package:movietime/model/url.dart';
+import 'package:movietime/api/url.dart';
 
 import '../misc/image_view.dart';
 

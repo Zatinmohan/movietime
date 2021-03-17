@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movietime/model/colordata.dart';
 import 'package:movietime/model/movieallDetails.dart';
-import 'package:movietime/model/url.dart';
+import 'package:movietime/api/url.dart';
 
 class DetailsAbove extends StatelessWidget {
   final String title;

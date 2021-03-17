@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:movietime/model/api.dart';
+import 'package:movietime/api/api.dart';
 import 'package:movietime/model/colordata.dart';
 import 'package:movietime/model/movieModel.dart';
-import 'package:movietime/model/url.dart';
+import 'package:movietime/api/url.dart';
 import '../movie details/moviedetail.dart';
 
 class SearchResult extends StatefulWidget {

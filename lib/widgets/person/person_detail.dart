@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movietime/model/api.dart';
+import 'package:movietime/api/api.dart';
 import 'package:movietime/model/castModel.dart';
 import 'package:movietime/widgets/misc/appbar.dart';
 import 'package:movietime/widgets/movie%20details/photos.dart';

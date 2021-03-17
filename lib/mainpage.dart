@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:movietime/model/api.dart';
 import 'package:movietime/widgets/misc/navbar.dart';
 import 'package:movietime/widgets/misc/appbar.dart';
 import 'package:movietime/widgets/categories/colrow.dart';
 import 'package:movietime/widgets/categories/topMovies.dart';
+
+import 'api/api.dart';
 
 class MainPage extends StatefulWidget {
   @override

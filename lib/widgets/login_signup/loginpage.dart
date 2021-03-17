@@ -1,9 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:movietime/firebase/authentication.dart';
 import 'package:movietime/model/colordata.dart';
 
 import 'package:movietime/widgets/login_signup/google_facebook.dart';
 import 'package:movietime/widgets/login_signup/signup.dart';
+import 'package:provider/provider.dart';
 
 import '../../mainpage.dart';
 
@@ -19,13 +21,13 @@ class LoginPage extends StatelessWidget {
         .hasMatch(value);
 
     if (value.isEmpty)
-      return "Please enter the email";
-    else if (!emailValid) return "Enter a valid email";
+      return "*Required";
+    else if (!emailValid) return "*Enter a valid email";
     return null;
   }
 
   String passwordValidator(String value) {
-    if (value.isEmpty) return "Please enter the password";
+    if (value.isEmpty) return "*Required";
     return null;
   }
 
@@ -108,27 +110,55 @@ class LoginPage extends StatelessWidget {
                 textAlign: TextAlign.left,
               ),
               SizedBox(height: 25.0),
-              Center(
-                child: Container(
-                  width: width * 0.8,
-                  height: 55,
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                    ),
-                    color: logoColor,
-                    onPressed: () {
-                      if (formKey.currentState.validate())
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => MainPage()));
-                    },
-                    child: Text(
-                      'SIGN IN',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 1.2,
-                        fontSize: 18.0,
+              Builder(
+                builder: (context) => Center(
+                  child: Container(
+                    width: width * 0.8,
+                    height: 55,
+                    child: RaisedButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      color: logoColor,
+                      onPressed: () {
+                        if (formKey.currentState.validate()) {
+                          context
+                              .read<AuthenticationServices>()
+                              .signIn(
+                                username: _emailController.text.trim(),
+                                password: _passwordController.text.trim(),
+                              )
+                              .timeout(const Duration(seconds: 10),
+                                  onTimeout: () {
+                            Scaffold.of(context).showSnackBar(
+                                SnackBar(content: Text("Network Issue!")));
+                            return "true";
+                          }).then((value) {
+                            if (value == 'user-not-found')
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text("User not registered")));
+                            else if (value == 'wrong-password')
+                              Scaffold.of(context).showSnackBar(SnackBar(
+                                  content: Text("Password incorrect!")));
+                            else if (value == 'Successful')
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => MainPage()));
+                            else
+                              Scaffold.of(context).showSnackBar(
+                                  SnackBar(content: Text("Network Issue!")));
+                          });
+                        }
+                      },
+                      child: Text(
+                        'SIGN IN',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 1.2,
+                          fontSize: 18.0,
+                        ),
                       ),
                     ),
                   ),

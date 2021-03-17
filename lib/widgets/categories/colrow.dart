@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movietime/model/colordata.dart';
 import 'package:movietime/model/movieModel.dart';
-import 'package:movietime/model/url.dart';
+import 'package:movietime/api/url.dart';
 import 'package:movietime/widgets/movie%20details/showAllMovies.dart';
 import 'package:movietime/widgets/movie%20details/moviedetail.dart';
 
@@ -104,8 +104,10 @@ class Category extends StatelessWidget {
                                       ),
                                     ],
                                     image: DecorationImage(
-                                      image: NetworkImage(
-                                          '${URLs.imageURL}$poster'),
+                                      image: poster != null
+                                          ? NetworkImage(
+                                              '${URLs.imageURL}$poster')
+                                          : AssetImage('assets/nfound.png'),
                                       fit: BoxFit.fill,
                                     )),
                               ),

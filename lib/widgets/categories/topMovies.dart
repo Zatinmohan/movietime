@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movietime/model/movieModel.dart';
-import 'package:movietime/model/url.dart';
+import 'package:movietime/api/url.dart';
 
 import '../movie details/moviedetail.dart';
 

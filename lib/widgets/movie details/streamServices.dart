@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movietime/model/url.dart';
+import 'package:movietime/api/url.dart';
 
 class Streaming extends StatelessWidget {
   final height, width, providers;

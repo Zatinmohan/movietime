@@ -1,4 +1,4 @@
-import 'package:movietime/model/api_key.dart';
+import 'package:movietime/api/api_key.dart';
 
 class URLs {
   static String _baseURL = "https://api.themoviedb.org/3/";

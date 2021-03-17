@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:movietime/model/castModel.dart';
 import 'package:movietime/model/movieModel.dart';
 import 'package:movietime/model/movieallDetails.dart';
-import 'package:movietime/model/url.dart';
+import 'package:movietime/api/url.dart';
 
 class APIManager {
   var _movieModel;
@@ -16,7 +16,7 @@ class APIManager {
     }
   }
 
-  check_movie(var response) {
+  checkMovie(var response) {
     if (response.statusCode == 200) {
       var jsonString = jsonDecode(response.body);
       _movieModel = MovieDetailModel.fromJson(jsonString);
@@ -74,7 +74,7 @@ class APIManager {
   Future<MovieDetailModel> getDetails(String id) async {
     try {
       var response = await http.get(URLs.getMoviesURL(id));
-      check_movie(response);
+      checkMovie(response);
     } catch (Exception) {
       return null;
     }

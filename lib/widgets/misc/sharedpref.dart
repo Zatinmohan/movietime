@@ -2,7 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedFiles {
   static SharedPreferences _preferences;
-  final String key_name = "MovieList";
+  final String keyName = "MovieList";
 
   //Use the factory keyword when implementing a constructor that doesn’t always create a new instance of its class.
   //For example, a factory constructor might return an instance from a cache, or it might return an instance of a subtype
@@ -17,15 +17,15 @@ class SharedFiles {
   }
 
   checkMovie() {
-    return _preferences.containsKey(key_name) ? true : false;
+    return _preferences.containsKey(keyName) ? true : false;
   }
 
   setMovies(List<String> movieList) {
-    _preferences.setStringList(key_name, movieList);
+    _preferences.setStringList(keyName, movieList);
   }
 
   getMovies() {
-    List<String> movieList = _preferences.getStringList(key_name);
+    List<String> movieList = _preferences.getStringList(keyName);
     return movieList;
   }
 }

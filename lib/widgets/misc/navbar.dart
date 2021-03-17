@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:movietime/firebase/authentication.dart';
+import 'package:movietime/widgets/login_signup/loginpage.dart';
+import 'package:provider/provider.dart';
 
 class NavBar extends StatelessWidget {
   @override
@@ -43,7 +46,11 @@ class NavBar extends StatelessWidget {
             color: Colors.redAccent[100],
           ),
           title: Text('Logout'),
-          onTap: () => print("HOME"),
+          onTap: () {
+            context.read<AuthenticationServices>().signOut().whenComplete(() =>
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (_) => LoginPage())));
+          },
         )
       ]),
     );

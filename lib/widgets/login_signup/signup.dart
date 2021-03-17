@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:movietime/firebase/authentication.dart';
 import 'package:movietime/model/colordata.dart';
 import 'package:movietime/widgets/login_signup/loginpage.dart';
+import 'package:provider/provider.dart';
 
 class Signup extends StatelessWidget {
   final width, height;
@@ -144,31 +146,47 @@ class Signup extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 35.0),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        width: width * 0.8,
-                        height: 55,
-                        child: RaisedButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25.0),
-                          ),
-                          color: logoColor,
-                          onPressed: () {
-                            if (_formKey.currentState.validate()) {
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => LoginPage()));
-                            }
-                          },
-                          child: Text(
-                            'SIGN UP',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: 1.2,
-                              fontSize: 18.0,
+                    Builder(
+                      builder: (context) => Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          width: width * 0.8,
+                          height: 55,
+                          child: RaisedButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25.0),
+                            ),
+                            color: logoColor,
+                            onPressed: () {
+                              if (_formKey.currentState.validate()) {
+                                context
+                                    .read<AuthenticationServices>()
+                                    .signUp(
+                                      username: _emailController.text.trim(),
+                                      name: _nameController.text.trim(),
+                                      password: _passwordController.text.trim(),
+                                    )
+                                    .then((value) {
+                                  if (value == "Successful") {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => LoginPage()));
+                                  } else
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                        content: Text(
+                                            "Unkown Error! Try again after sometime")));
+                                });
+                              }
+                            },
+                            child: Text(
+                              'SIGN UP',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 1.2,
+                                fontSize: 18.0,
+                              ),
                             ),
                           ),
                         ),

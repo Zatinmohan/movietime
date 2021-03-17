@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movietime/model/url.dart';
+import 'package:movietime/api/url.dart';
 import 'package:movietime/widgets/person/person_detail.dart';
 
 class AllCast extends StatelessWidget {
