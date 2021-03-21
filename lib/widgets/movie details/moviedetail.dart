@@ -15,6 +15,7 @@ import 'package:movietime/widgets/movie%20details/photos.dart';
 
 import 'package:movietime/widgets/movie%20details/storyline.dart';
 import 'package:movietime/widgets/movie%20details/streamServices.dart';
+import 'package:optimized_cached_image/widgets.dart';
 
 class MovieDetail extends StatefulWidget {
   final int id;
@@ -97,20 +98,27 @@ class _MovieDetailState extends State<MovieDetail> {
                                 child: Container(
                                   height: height * 0.45,
                                   decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          offset: Offset(0.0, 3.0),
-                                          blurRadius: 6.0,
-                                          color: Colors.black26,
-                                        )
-                                      ],
-                                      image: DecorationImage(
-                                        image: backdrop != null
-                                            ? NetworkImage(
-                                                "${URLs.imageURL}$backdrop")
-                                            : AssetImage('assets/nfound.png'),
-                                        fit: BoxFit.cover,
-                                      )),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        offset: Offset(0.0, 3.0),
+                                        blurRadius: 6.0,
+                                        color: Colors.black26,
+                                      )
+                                    ],
+                                    // image: DecorationImage(
+                                    //   image: backdrop != null
+                                    //       ? NetworkImage(
+                                    //           "${URLs.imageURL}$backdrop")
+                                    //       : AssetImage('assets/nfound.png'),
+                                    //   fit: BoxFit.cover,
+                                    // )
+                                  ),
+                                  child: backdrop == null
+                                      ? AssetImage('assets/nfound.png')
+                                      : OptimizedCacheImage(
+                                          imageUrl: "${URLs.imageURL}$backdrop",
+                                          fit: BoxFit.cover,
+                                        ),
                                 ),
                               ),
                               UpperToolbar(),

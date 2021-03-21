@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:movietime/widgets/splash.dart';
 import 'package:provider/provider.dart';
 import 'firebase/authentication.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<AuthenticationServices>(
+        Provider(
           create: (_) => AuthenticationServices(FirebaseAuth.instance),
         ),
         StreamProvider(

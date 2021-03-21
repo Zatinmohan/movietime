@@ -5,21 +5,28 @@ import 'package:movietime/model/colordata.dart';
 import 'package:movietime/widgets/login_signup/loginpage.dart';
 import 'package:provider/provider.dart';
 
-class Signup extends StatelessWidget {
+class Signup extends StatefulWidget {
   final width, height;
+  Signup({Key key, this.width, this.height}) : super(key: key);
+
+  @override
+  _SignupState createState() => _SignupState();
+}
+
+class _SignupState extends State<Signup> {
   final _formKey = GlobalKey<FormState>();
 
   final _nameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _retypePasswordController = TextEditingController();
 
-  //  ------------------------------------------------------------
-  //  Validators
+  final _emailController = TextEditingController();
+
+  final _passwordController = TextEditingController();
+
+  final _retypePasswordController = TextEditingController();
 
   String nameValidator(String value) {
     if (value.isEmpty)
-      return "You have to fill this field";
+      return "*Required";
     else if (value.length < 3) return "Enter a valid name";
     return null;
   }
@@ -29,14 +36,14 @@ class Signup extends StatelessWidget {
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(value);
     if (value.isEmpty)
-      return "You have to fill this field";
+      return "*Required";
     else if (value.length < 3 || !emailValid) return "Enter a valid email";
     return null;
   }
 
   String passwordValidator(String value) {
     if (value.isEmpty)
-      return "You have to fill this field";
+      return "*Required";
     else if (value.length < 5) return "Weak password";
     return null;
   }
@@ -46,9 +53,6 @@ class Signup extends StatelessWidget {
     return "Password do not match";
   }
 
-  //  -----------------------------------------------------------------------------
-
-  Signup({Key key, this.width, this.height}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +68,7 @@ class Signup extends StatelessWidget {
                     color: logoColor,
                   ),
                   onPressed: () => Navigator.pop(context)),
-              SizedBox(height: height * 0.06),
+              SizedBox(height: widget.height * 0.06),
               RichText(
                 text: TextSpan(children: [
                   TextSpan(
@@ -72,14 +76,14 @@ class Signup extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w900,
-                        fontSize: width * 0.13,
+                        fontSize: widget.width * 0.13,
                       )),
                   TextSpan(
                       text: "Account",
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w900,
-                        fontSize: width * 0.13,
+                        fontSize: widget.width * 0.13,
                       )),
                 ]),
               ),
@@ -150,7 +154,7 @@ class Signup extends StatelessWidget {
                       builder: (context) => Align(
                         alignment: Alignment.bottomCenter,
                         child: Container(
-                          width: width * 0.8,
+                          width: widget.width * 0.8,
                           height: 55,
                           child: RaisedButton(
                             shape: RoundedRectangleBorder(
@@ -159,6 +163,15 @@ class Signup extends StatelessWidget {
                             color: logoColor,
                             onPressed: () {
                               if (_formKey.currentState.validate()) {
+                                Scaffold.of(context).showSnackBar(SnackBar(
+                                    duration: Duration(seconds: 10),
+                                    content: Row(
+                                      children: [
+                                        CircularProgressIndicator(),
+                                        SizedBox(width: 10.0),
+                                        Text('Please Wait'),
+                                      ],
+                                    )));
                                 context
                                     .read<AuthenticationServices>()
                                     .signUp(

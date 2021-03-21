@@ -122,18 +122,28 @@ class LoginPage extends StatelessWidget {
                       color: logoColor,
                       onPressed: () {
                         if (formKey.currentState.validate()) {
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                              duration: Duration(seconds: 7),
+                              content: Row(
+                                children: [
+                                  CircularProgressIndicator(),
+                                  SizedBox(width: 16.0),
+                                  Text('Signing-in'),
+                                ],
+                              )));
                           context
                               .read<AuthenticationServices>()
                               .signIn(
                                 username: _emailController.text.trim(),
                                 password: _passwordController.text.trim(),
                               )
-                              .timeout(const Duration(seconds: 10),
+                              .timeout(const Duration(seconds: 20),
                                   onTimeout: () {
                             Scaffold.of(context).showSnackBar(
                                 SnackBar(content: Text("Network Issue!")));
                             return "true";
                           }).then((value) {
+                            print(value);
                             if (value == 'user-not-found')
                               Scaffold.of(context).showSnackBar(SnackBar(
                                   content: Text("User not registered")));

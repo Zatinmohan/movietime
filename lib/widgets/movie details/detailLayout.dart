@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movietime/model/colordata.dart';
 import 'package:movietime/model/movieallDetails.dart';
 import 'package:movietime/api/url.dart';
+import 'package:optimized_cached_image/widgets.dart';
 
 class DetailsAbove extends StatelessWidget {
   final String title;
@@ -29,14 +30,24 @@ class DetailsAbove extends StatelessWidget {
           width: width * 0.35,
           height: height * 0.28,
           decoration: BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.circular(20.0),
-              image: DecorationImage(
-                image: image == null
-                    ? AssetImage('assets/nfound.png')
-                    : NetworkImage("${URLs.imageURL}$image"),
-                fit: BoxFit.cover,
-              )),
+            color: Colors.black,
+            borderRadius: BorderRadius.circular(20.0),
+            // image: DecorationImage(
+            //   image: image == null
+            //       ? AssetImage('assets/nfound.png')
+            //       : NetworkImage("${URLs.imageURL}$image"),
+            //   fit: BoxFit.cover,
+            // )
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: image == null
+                ? AssetImage('assets/nfound.png')
+                : OptimizedCacheImage(
+                    imageUrl: '${URLs.imageURL}$image',
+                    fit: BoxFit.cover,
+                  ),
+          ),
         ),
         Flexible(
           child: Column(

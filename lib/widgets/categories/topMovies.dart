@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movietime/model/movieModel.dart';
 import 'package:movietime/api/url.dart';
+import 'package:optimized_cached_image/widgets.dart';
 
 import '../movie details/moviedetail.dart';
 
@@ -36,18 +37,22 @@ class TopMix extends StatelessWidget {
                       child: Container(
                         margin: EdgeInsets.all(8.0),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.0),
-                            boxShadow: [
-                              BoxShadow(
-                                offset: Offset(0.0, 3.0),
-                                blurRadius: 6.0,
-                                color: Colors.black26,
-                              )
-                            ],
-                            image: DecorationImage(
-                              image: NetworkImage('${URLs.imageURL}$poster'),
-                              fit: BoxFit.fill,
-                            )),
+                          borderRadius: BorderRadius.circular(20.0),
+                          boxShadow: [
+                            BoxShadow(
+                              offset: Offset(0.0, 3.0),
+                              blurRadius: 6.0,
+                              color: Colors.black26,
+                            )
+                          ],
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20.0),
+                          child: OptimizedCacheImage(
+                            imageUrl: '${URLs.imageURL}$poster',
+                            fit: BoxFit.fill,
+                          ),
+                        ),
                       ),
                     );
                   });

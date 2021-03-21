@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:movietime/api/url.dart';
 import 'package:movietime/widgets/movie%20details/moviedetail.dart';
+import 'package:optimized_cached_image/optimized_cached_image.dart';
 
 class MoviesAll extends StatelessWidget {
   final id, path, name;
@@ -25,7 +27,9 @@ class MoviesAll extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),
-                child: Image.network('$path'),
+                child: OptimizedCacheImage(
+                  imageUrl: "${URLs.imageURL}$path",
+                ),
               ),
             ),
             SizedBox(height: 5.0),

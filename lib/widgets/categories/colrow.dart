@@ -4,6 +4,7 @@ import 'package:movietime/model/movieModel.dart';
 import 'package:movietime/api/url.dart';
 import 'package:movietime/widgets/movie%20details/showAllMovies.dart';
 import 'package:movietime/widgets/movie%20details/moviedetail.dart';
+import 'package:optimized_cached_image/optimized_cached_image.dart';
 
 class Category extends StatelessWidget {
   final bool home;
@@ -94,22 +95,27 @@ class Category extends StatelessWidget {
                                 height: height,
                                 margin: EdgeInsets.only(right: 16.0, top: 5.0),
                                 decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        offset: Offset(0.0, 3.0),
-                                        blurRadius: 6.0,
-                                        color: Colors.black26,
-                                      ),
-                                    ],
-                                    image: DecorationImage(
-                                      image: poster != null
-                                          ? NetworkImage(
-                                              '${URLs.imageURL}$poster')
-                                          : AssetImage('assets/nfound.png'),
-                                      fit: BoxFit.fill,
-                                    )),
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      offset: Offset(0.0, 3.0),
+                                      blurRadius: 6.0,
+                                      color: Colors.black26,
+                                    ),
+                                  ],
+                                ),
+                                child: poster != null
+                                    ? ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                        child: OptimizedCacheImage(
+                                          imageUrl: '${URLs.imageURL}$poster',
+                                          width: width,
+                                          fit: BoxFit.fill,
+                                        ),
+                                      )
+                                    : Image.asset('assets/nfound.png'),
                               ),
                               Align(
                                 alignment: Alignment.bottomLeft,

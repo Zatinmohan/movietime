@@ -37,6 +37,7 @@ dependencies:
   firebase_core:
   cloud_firestore:
   provider:
+  optimized_cached_image: 
   
 
 dev_dependencies:

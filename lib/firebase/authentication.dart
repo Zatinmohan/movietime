@@ -11,6 +11,7 @@ class AuthenticationServices {
     try {
       await _firebase.signInWithEmailAndPassword(
           email: username, password: password);
+
       return "Successful";
     } catch (e) {
       return e.code;
@@ -21,6 +22,7 @@ class AuthenticationServices {
     try {
       await _firebase.createUserWithEmailAndPassword(
           email: username, password: password);
+
       return "Successful";
     } on FirebaseAuthException catch (e) {
       return e.message;
@@ -29,10 +31,11 @@ class AuthenticationServices {
 
   Future<String> signOut() async {
     await _firebase.signOut();
+
     return "Sign out Successfully";
   }
 
-  String getCurrentUser() {
-    return _firebase.currentUser.uid;
+  Future<dynamic> getCurrentUser() async {
+    return _firebase.currentUser;
   }
 }
