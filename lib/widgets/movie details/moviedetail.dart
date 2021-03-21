@@ -58,181 +58,172 @@ class _MovieDetailState extends State<MovieDetail> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: builder == null
-          ? Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
-              child: FutureBuilder<MovieDetailModel>(
-                future: builder,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    String backdrop = snapshot.data.backdropPath;
-                    String title = snapshot.data.title;
-                    int runtime = snapshot.data.runtime;
-                    double rating = snapshot.data.voteAverage;
-                    String poster = snapshot.data.posterPath;
-                    List<Genre> genre = snapshot.data.genre;
-                    IN india = snapshot.data.watchProviders.results.india;
-                    List<Flatrate> providers;
-                    if (india != null)
-                      providers =
-                          snapshot.data.watchProviders.results.india.flatrate;
+      body: Center(
+        child: SingleChildScrollView(
+          child: FutureBuilder<MovieDetailModel>(
+            future: builder,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                String backdrop = snapshot.data.backdropPath;
+                String title = snapshot.data.title;
+                int runtime = snapshot.data.runtime;
+                double rating = snapshot.data.voteAverage;
+                String poster = snapshot.data.posterPath;
+                List<Genre> genre = snapshot.data.genre;
+                IN india = snapshot.data.watchProviders.results.india;
+                List<Flatrate> providers;
+                if (india != null)
+                  providers =
+                      snapshot.data.watchProviders.results.india.flatrate;
 
-                    String releaseDate = snapshot.data.releaseDate;
-                    int budget = snapshot.data.budget;
-                    int revenue = snapshot.data.revenue;
-                    String tagline = snapshot.data.tagline;
-                    String overview = snapshot.data.overview;
-                    List<Cast> cast = snapshot.data.credits.cast;
-                    List<Cast> crew = snapshot.data.credits.crew;
-                    List<Backdrop> backdrops = snapshot.data.images.backdrops;
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: height * 0.65,
-                          //color: Colors.blue,
-                          child: Stack(
-                            children: [
-                              ClipPath(
-                                clipper: SemiCircle(),
-                                child: Container(
-                                  height: height * 0.45,
-                                  decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        offset: Offset(0.0, 3.0),
-                                        blurRadius: 6.0,
-                                        color: Colors.black26,
-                                      )
-                                    ],
-                                    // image: DecorationImage(
-                                    //   image: backdrop != null
-                                    //       ? NetworkImage(
-                                    //           "${URLs.imageURL}$backdrop")
-                                    //       : AssetImage('assets/nfound.png'),
-                                    //   fit: BoxFit.cover,
-                                    // )
-                                  ),
-                                  child: backdrop == null
-                                      ? AssetImage('assets/nfound.png')
-                                      : OptimizedCacheImage(
-                                          imageUrl: "${URLs.imageURL}$backdrop",
-                                          fit: BoxFit.cover,
-                                        ),
-                                ),
+                String releaseDate = snapshot.data.releaseDate;
+                int budget = snapshot.data.budget;
+                int revenue = snapshot.data.revenue;
+                String tagline = snapshot.data.tagline;
+                String overview = snapshot.data.overview;
+                List<Cast> cast = snapshot.data.credits.cast;
+                List<Cast> crew = snapshot.data.credits.crew;
+                List<Backdrop> backdrops = snapshot.data.images.backdrops;
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: height * 0.65,
+                      //color: Colors.blue,
+                      child: Stack(
+                        children: [
+                          ClipPath(
+                            clipper: SemiCircle(),
+                            child: Container(
+                              height: height * 0.45,
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    offset: Offset(0.0, 3.0),
+                                    blurRadius: 6.0,
+                                    color: Colors.black26,
+                                  )
+                                ],
                               ),
-                              UpperToolbar(),
-                              Positioned(
-                                top: height * 0.28,
-                                width: width - 5,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16.0),
-                                  child: DetailsAbove(
-                                    title: title,
-                                    runtime: runtime,
-                                    rating: rating,
-                                    image: poster,
-                                    genreList: genre,
+                              child: backdrop == null
+                                  ? AssetImage('assets/nfound.png')
+                                  : OptimizedCacheImage(
+                                      imageUrl: "${URLs.imageURL}$backdrop",
+                                      fit: BoxFit.cover,
+                                    ),
+                            ),
+                          ),
+                          UpperToolbar(),
+                          Positioned(
+                            top: height * 0.28,
+                            width: width - 5,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: DetailsAbove(
+                                title: title,
+                                runtime: runtime,
+                                rating: rating,
+                                image: poster,
+                                genreList: genre,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: height * 0.57,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding:
+                                      EdgeInsets.only(left: 20.0, right: 10.0),
+                                  child: Text(
+                                    'Available on: ',
+                                    style: TextStyle(
+                                      color: textColor,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 20.0,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Positioned(
-                                top: height * 0.57,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 20.0, right: 10.0),
-                                      child: Text(
-                                        'Available on: ',
+                                providers == null
+                                    ? Text(
+                                        "N/A",
                                         style: TextStyle(
                                           color: textColor,
                                           fontWeight: FontWeight.w600,
                                           fontSize: 20.0,
                                         ),
+                                      )
+                                    : Streaming(
+                                        height: height,
+                                        width: width,
+                                        providers: providers,
                                       ),
-                                    ),
-                                    providers == null
-                                        ? Text(
-                                            "N/A",
-                                            style: TextStyle(
-                                              color: textColor,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 20.0,
-                                            ),
-                                          )
-                                        : Streaming(
-                                            height: height,
-                                            width: width,
-                                            providers: providers,
-                                          ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        MovieInfo(
-                            k: "Release date:",
-                            v: "${releaseDate.split('-').reversed.join('-')}"),
-                        SizedBox(height: 8.0),
-                        MovieInfo(k: "Budget:", v: moneyCalculator(budget)),
-                        SizedBox(height: 8.0),
-                        MovieInfo(
-                            k: "Box Office:", v: moneyCalculator(revenue)),
-                        SizedBox(height: 8.0),
-                        MovieInfo(k: "Tagline: ", v: "$tagline"),
-                        SizedBox(height: 20.0),
-                        StoryLine(
-                          storyline: overview,
-                          k: "STORYLINE",
-                        ),
-                        SizedBox(height: 16.0),
-                        cast.length == null
-                            ? SizedBox.shrink()
-                            : MovieCast(
-                                title: "CAST",
-                                cast: cast,
-                                width: width,
-                                height: height,
-                                desig: false,
-                              ),
-                        SizedBox(height: 16.0),
-                        crew.length == null
-                            ? SizedBox.shrink()
-                            : MovieCast(
-                                title: "CREW",
-                                cast: crew,
-                                width: width,
-                                height: height,
-                                desig: true,
-                              ),
-                        SizedBox(height: 16.0),
-                        backdrops.length == 0
-                            ? SizedBox.shrink()
-                            : Photos(
-                                photos: backdrops,
-                                width: width,
-                                height: height,
-                              ),
-                        Category(
-                          title: "RECOMMENDATIONS",
-                          movieBuilder: recommendation,
-                          height: 210,
-                          width: 150,
-                          home: false,
-                        ),
-                      ],
-                    );
-                  }
-                  return CircularProgressIndicator();
-                },
-              ),
-            ),
+                        ],
+                      ),
+                    ),
+                    MovieInfo(
+                        k: "Release date:",
+                        v: "${releaseDate.split('-').reversed.join('-')}"),
+                    SizedBox(height: 8.0),
+                    MovieInfo(k: "Budget:", v: moneyCalculator(budget)),
+                    SizedBox(height: 8.0),
+                    MovieInfo(k: "Box Office:", v: moneyCalculator(revenue)),
+                    SizedBox(height: 8.0),
+                    MovieInfo(k: "Tagline: ", v: "$tagline"),
+                    SizedBox(height: 20.0),
+                    StoryLine(
+                      storyline: overview,
+                      k: "STORYLINE",
+                    ),
+                    SizedBox(height: 16.0),
+                    cast.length == null
+                        ? SizedBox.shrink()
+                        : MovieCast(
+                            title: "CAST",
+                            cast: cast,
+                            width: width,
+                            height: height,
+                            desig: false,
+                          ),
+                    SizedBox(height: 16.0),
+                    crew.length == null
+                        ? SizedBox.shrink()
+                        : MovieCast(
+                            title: "CREW",
+                            cast: crew,
+                            width: width,
+                            height: height,
+                            desig: true,
+                          ),
+                    SizedBox(height: 16.0),
+                    backdrops.length == 0
+                        ? SizedBox.shrink()
+                        : Photos(
+                            photos: backdrops,
+                            width: width,
+                            height: height,
+                          ),
+                    Category(
+                      title: "RECOMMENDATIONS",
+                      movieBuilder: recommendation,
+                      height: 210,
+                      width: 150,
+                      home: false,
+                    ),
+                  ],
+                );
+              }
+              return Center(child: CircularProgressIndicator());
+            },
+          ),
+        ),
+      ),
     );
   }
 }

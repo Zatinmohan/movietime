@@ -32,50 +32,50 @@ class _PersonDetailState extends State<PersonDetail> {
       appBar: CustomAppBar(
         scaffoldKey: _scaffoldKey,
       ),
-      body: builder == null
-          ? Center(
+      body: Center(
+        child: SingleChildScrollView(
+            child: FutureBuilder<CastModel>(
+          future: builder,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              String bio = snapshot.data.biography;
+              List<Profiles> images = snapshot.data.images.profiles;
+              return Column(
+                children: [
+                  CastAbove(
+                    height: widget.height,
+                    width: widget.width,
+                    name: snapshot.data.name,
+                    dept: snapshot.data.job,
+                    dob: snapshot.data.birthday,
+                    dod: snapshot.data.deathday,
+                    pob: snapshot.data.placeOfBirth,
+                    profile: snapshot.data.profilePath,
+                  ),
+                  SizedBox(height: 10.0),
+                  bio != null
+                      ? StoryLine(
+                          storyline: bio,
+                          k: "BIOGRAPHY",
+                        )
+                      : SizedBox.shrink(),
+                  SizedBox(height: 12.0),
+                  images != null
+                      ? Photos(
+                          photos: images,
+                          height: widget.height,
+                          width: widget.width,
+                        )
+                      : SizedBox.shrink(),
+                ],
+              );
+            }
+            return Center(
               child: CircularProgressIndicator(),
-            )
-          : SingleChildScrollView(
-              child: FutureBuilder<CastModel>(
-              future: builder,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  String bio = snapshot.data.biography;
-                  List<Profiles> images = snapshot.data.images.profiles;
-                  return Column(
-                    children: [
-                      CastAbove(
-                        height: widget.height,
-                        width: widget.width,
-                        name: snapshot.data.name,
-                        dept: snapshot.data.job,
-                        dob: snapshot.data.birthday,
-                        dod: snapshot.data.deathday,
-                        pob: snapshot.data.placeOfBirth,
-                        profile: snapshot.data.profilePath,
-                      ),
-                      SizedBox(height: 10.0),
-                      bio != null
-                          ? StoryLine(
-                              storyline: bio,
-                              k: "BIOGRAPHY",
-                            )
-                          : SizedBox.shrink(),
-                      SizedBox(height: 12.0),
-                      images != null
-                          ? Photos(
-                              photos: images,
-                              height: widget.height,
-                              width: widget.width,
-                            )
-                          : SizedBox.shrink(),
-                    ],
-                  );
-                }
-                return Container();
-              },
-            )),
+            );
+          },
+        )),
+      ),
     );
   }
 }
