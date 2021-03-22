@@ -13,7 +13,6 @@ class URLs {
       "https://api.themoviedb.org/3/movie/now_playing?api_key=";
   static String _upcoming =
       "https://api.themoviedb.org/3/movie/upcoming?api_key=";
-
   static String _popularPeople =
       "https://api.themoviedb.org/3/person/popular?api_key=";
 

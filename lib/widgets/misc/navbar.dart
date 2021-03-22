@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:movietime/firebase/authentication.dart';
 import 'package:movietime/widgets/login_signup/loginpage.dart';
+import 'package:movietime/widgets/misc/profile.dart';
+import 'package:movietime/widgets/misc/setting.dart';
 import 'package:provider/provider.dart';
 
 class NavBar extends StatelessWidget {
@@ -27,19 +29,19 @@ class NavBar extends StatelessWidget {
         ListTile(
           leading: Icon(FontAwesomeIcons.userAlt),
           title: Text('Profile'),
-          onTap: () => print("HOME"),
-        ),
-        ListTile(
-          leading: Icon(FontAwesomeIcons.users),
-          title: Text('Celebrities'),
-          onTap: () => print("HOME"),
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (_) => Profile()));
+          },
         ),
         ListTile(
           leading: Icon(FontAwesomeIcons.cog),
           title: Text('Settings'),
-          onTap: () => print("HOME"),
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (_) => Settings()));
+          },
         ),
-        //SizedBox(height: MediaQuery.of(context).size.height * 0.25),
         ListTile(
           leading: Icon(
             Icons.logout,
