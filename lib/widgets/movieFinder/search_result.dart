@@ -29,50 +29,56 @@ class _SearchResultState extends State<SearchResult> {
         future: builder,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return ListView.builder(
-              itemCount: snapshot.data.results.length,
-              itemBuilder: (BuildContext context, int index) {
-                String name = snapshot.data.results[index].title;
+            if (snapshot.data.results.length != 0) {
+              return ListView.builder(
+                itemCount: snapshot.data.results.length,
+                itemBuilder: (BuildContext context, int index) {
+                  String name = snapshot.data.results[index].title;
+                  String image = snapshot.data.results[index].posterPath;
+                  String date = snapshot.data.results[index].releaseDate;
+                  int id = snapshot.data.results[index].id;
 
-                String image = snapshot.data.results[index].posterPath;
+                  if (date != null)
+                    date = date.substring(0, 4);
+                  else
+                    date = "N/A";
 
-                String date = snapshot.data.results[index].releaseDate;
-                int id = snapshot.data.results[index].id;
-
-                if (date != null)
-                  date = date.substring(0, 4);
-                else
-                  date = "N/A";
-
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => MovieDetail(id: id)));
-                  },
-                  child: ListTile(
-                    leading: image == null
-                        ? Image.asset('assets/nfound.png')
-                        : Image.network(
-                            '${URLs.imageURL}$image',
-                          ),
-                    title: Text(
-                      '$name',
-                      style: TextStyle(
-                        color: textColor,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    subtitle: Text('$date',
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => MovieDetail(id: id)));
+                    },
+                    child: ListTile(
+                      leading: image == null
+                          ? Image.asset('assets/nfound.png')
+                          : Image.network(
+                              '${URLs.imageURL}$image',
+                            ),
+                      title: Text(
+                        '$name',
                         style: TextStyle(
-                          color: Colors.grey,
-                        )),
-                  ),
-                );
-              },
-            );
-          }
-          if (snapshot.hasError) return Text("Error");
-          return Text("Blank");
+                          color: textColor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      subtitle: Text('$date',
+                          style: TextStyle(
+                            color: Colors.grey,
+                          )),
+                    ),
+                  );
+                },
+              );
+            } else
+              return Center(child: Image.asset('assets/search_not_found.png'));
+          } else if (snapshot.connectionState == ConnectionState.waiting)
+            return Center(
+                child: CircularProgressIndicator(
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(Color(0xffFB5558))));
+          return Container();
         },
       ),
     );

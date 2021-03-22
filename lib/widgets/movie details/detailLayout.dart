@@ -1,7 +1,9 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:movietime/model/colordata.dart';
 import 'package:movietime/model/movieallDetails.dart';
 import 'package:movietime/api/url.dart';
+import 'package:movietime/widgets/movie%20details/streamServices.dart';
 import 'package:optimized_cached_image/widgets.dart';
 
 class DetailsAbove extends StatelessWidget {
@@ -10,6 +12,7 @@ class DetailsAbove extends StatelessWidget {
   final int runtime;
   final List<Genre> genreList;
   final String image;
+  final providers;
 
   const DetailsAbove(
       {Key key,
@@ -17,7 +20,8 @@ class DetailsAbove extends StatelessWidget {
       this.rating,
       this.runtime,
       this.genreList,
-      this.image})
+      this.image,
+      this.providers})
       : super(key: key);
 
   @override
@@ -27,22 +31,19 @@ class DetailsAbove extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: width * 0.35,
-          height: height * 0.28,
+          width: width * 0.38,
+          height: height * 0.32,
           decoration: BoxDecoration(
             color: Colors.black,
             borderRadius: BorderRadius.circular(20.0),
-            // image: DecorationImage(
-            //   image: image == null
-            //       ? AssetImage('assets/nfound.png')
-            //       : NetworkImage("${URLs.imageURL}$image"),
-            //   fit: BoxFit.cover,
-            // )
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20.0),
             child: image == null
-                ? AssetImage('assets/nfound.png')
+                ? Image.asset(
+                    'assets/nfound.png',
+                    fit: BoxFit.cover,
+                  )
                 : OptimizedCacheImage(
                     imageUrl: '${URLs.imageURL}$image',
                     fit: BoxFit.cover,
@@ -58,6 +59,32 @@ class DetailsAbove extends StatelessWidget {
               WidgetDetail(rating: rating, runtime: runtime),
               SizedBox(height: 4.0),
               WidgetGenre(genreList: genreList),
+              SizedBox(height: 5.0),
+              providers != null
+                  ? Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 20.0),
+                          child: Text(
+                            'Available on: ',
+                            style: TextStyle(
+                              color: textColor,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 3.0),
+                        Flexible(
+                          child: Streaming(
+                            height: height,
+                            width: width,
+                            providers: providers,
+                          ),
+                        )
+                      ],
+                    )
+                  : SizedBox.shrink(),
             ],
           ),
         )
@@ -80,7 +107,7 @@ class WidgetTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(top: height * 0.07, left: 22.0),
-      child: Text(
+      child: AutoSizeText(
         '$title',
         softWrap: true,
         style: TextStyle(
@@ -88,6 +115,7 @@ class WidgetTitle extends StatelessWidget {
           fontWeight: FontWeight.w500,
           fontSize: 28.0,
         ),
+        maxLines: 3,
       ),
     );
   }

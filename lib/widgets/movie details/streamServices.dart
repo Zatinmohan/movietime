@@ -11,21 +11,23 @@ class Streaming extends StatelessWidget {
     return Container(
       width: width,
       height: 50.0,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: providers.length,
-        itemBuilder: (BuildContext context, int index) {
-          String path = "${URLs.imageURL}${providers[index].logoPath}";
+      child: providers != null
+          ? ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: providers.length,
+              itemBuilder: (BuildContext context, int index) {
+                String path = "${URLs.imageURL}${providers[index].logoPath}";
 
-          return Container(
-            padding: EdgeInsets.all(8.0),
-            child: Image.network(
-              '$path',
-              height: 80.0,
-            ),
-          );
-        },
-      ),
+                return Container(
+                  padding: EdgeInsets.all(8.0),
+                  child: Image.network(
+                    '$path',
+                    height: 80.0,
+                  ),
+                );
+              },
+            )
+          : SizedBox.shrink(),
     );
   }
 }

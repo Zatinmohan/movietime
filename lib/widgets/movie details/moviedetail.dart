@@ -84,18 +84,19 @@ class _MovieDetailState extends State<MovieDetail> {
                 List<Cast> cast = snapshot.data.credits.cast;
                 List<Cast> crew = snapshot.data.credits.crew;
                 List<Backdrop> backdrops = snapshot.data.images.backdrops;
+
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      height: height * 0.65,
+                      height: height * 0.77,
                       //color: Colors.blue,
                       child: Stack(
                         children: [
                           ClipPath(
                             clipper: SemiCircle(),
                             child: Container(
-                              height: height * 0.45,
+                              height: height * 0.55,
                               decoration: BoxDecoration(
                                 boxShadow: [
                                   BoxShadow(
@@ -106,7 +107,11 @@ class _MovieDetailState extends State<MovieDetail> {
                                 ],
                               ),
                               child: backdrop == null
-                                  ? AssetImage('assets/nfound.png')
+                                  ? Image.asset(
+                                      'assets/nfound.png',
+                                      width: width,
+                                      fit: BoxFit.cover,
+                                    )
                                   : OptimizedCacheImage(
                                       imageUrl: "${URLs.imageURL}$backdrop",
                                       fit: BoxFit.cover,
@@ -115,7 +120,7 @@ class _MovieDetailState extends State<MovieDetail> {
                           ),
                           UpperToolbar(),
                           Positioned(
-                            top: height * 0.28,
+                            top: height * 0.39,
                             width: width - 5,
                             child: Padding(
                               padding:
@@ -126,47 +131,14 @@ class _MovieDetailState extends State<MovieDetail> {
                                 rating: rating,
                                 image: poster,
                                 genreList: genre,
+                                providers: providers,
                               ),
-                            ),
-                          ),
-                          Positioned(
-                            top: height * 0.57,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding:
-                                      EdgeInsets.only(left: 20.0, right: 10.0),
-                                  child: Text(
-                                    'Available on: ',
-                                    style: TextStyle(
-                                      color: textColor,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 20.0,
-                                    ),
-                                  ),
-                                ),
-                                providers == null
-                                    ? Text(
-                                        "N/A",
-                                        style: TextStyle(
-                                          color: textColor,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 20.0,
-                                        ),
-                                      )
-                                    : Streaming(
-                                        height: height,
-                                        width: width,
-                                        providers: providers,
-                                      ),
-                              ],
                             ),
                           ),
                         ],
                       ),
                     ),
+                    SizedBox(height: 5.0),
                     MovieInfo(
                         k: "Release date:",
                         v: "${releaseDate.split('-').reversed.join('-')}"),
