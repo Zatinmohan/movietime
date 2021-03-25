@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthenticationServices {
@@ -23,6 +24,14 @@ class AuthenticationServices {
       await _firebase.createUserWithEmailAndPassword(
           email: username, password: password);
 
+      FirebaseFirestore.instance
+          .collection('movieuser')
+          .doc(_firebase.currentUser.uid)
+          .set({
+        'name': name,
+        'email': username,
+      });
+
       return "Successful";
     } on FirebaseAuthException catch (e) {
       return e.message;
@@ -37,5 +46,12 @@ class AuthenticationServices {
 
   Future<dynamic> getCurrentUser() async {
     return _firebase.currentUser;
+  }
+
+  Stream<DocumentSnapshot> getDataBase() {
+    return FirebaseFirestore.instance
+        .collection('movieuser')
+        .doc(_firebase.currentUser.uid)
+        .snapshots();
   }
 }

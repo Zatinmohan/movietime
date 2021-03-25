@@ -2,8 +2,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movietime/firebase/authentication.dart';
 import 'package:movietime/model/colordata.dart';
+import 'package:movietime/widgets/login_signup/loginpage.dart';
 import 'package:movietime/widgets/misc/appbar.dart';
+import 'package:provider/provider.dart';
 
 class Profile extends StatelessWidget {
   @override
@@ -111,7 +114,13 @@ class Profile extends StatelessWidget {
                     height: 50.0,
                     child: RaisedButton(
                       color: Color(0xffDB4437),
-                      onPressed: () => print("Logout"),
+                      onPressed: () => context
+                          .read<AuthenticationServices>()
+                          .signOut()
+                          .whenComplete(() => Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (_) => LoginPage()),
+                              )),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
                       ),
