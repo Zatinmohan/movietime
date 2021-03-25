@@ -49,11 +49,13 @@ class NavBar extends StatelessWidget {
           ),
           title: Text('Logout'),
           onTap: () {
-            context.read<AuthenticationServices>().signOut().whenComplete(() =>
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (_) => LoginPage()),
-                    (_) => true));
+            context
+                .read<AuthenticationServices>()
+                .signOut()
+                .whenComplete(() => Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (_) => LoginPage()),
+                    ));
           },
         )
       ]),

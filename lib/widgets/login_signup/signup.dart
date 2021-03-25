@@ -67,7 +67,8 @@ class _SignupState extends State<Signup> {
                     FontAwesomeIcons.arrowLeft,
                     color: logoColor,
                   ),
-                  onPressed: () => Navigator.pop(context)),
+                  onPressed: () => Navigator.pushReplacement(
+                      context, MaterialPageRoute(builder: (_) => LoginPage()))),
               SizedBox(height: widget.height * 0.06),
               RichText(
                 text: TextSpan(children: [
