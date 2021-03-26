@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -30,41 +31,57 @@ class Profile extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(children: [
-                CircleAvatar(
-                  radius: width * 0.2,
-                  backgroundColor: Colors.white,
-                  backgroundImage: AssetImage('assets/newuser.png'),
-                ),
-                SizedBox(width: 12.0),
-                Flexible(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      AutoSizeText(
-                        'First Last',
-                        style: TextStyle(
-                          color: textColor,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 22.0,
+              StreamBuilder<DocumentSnapshot>(
+                stream: context.read<AuthenticationServices>().getDataBase(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.active) {
+                    if (snapshot.hasData) {
+                      String name = snapshot.data.get('name');
+                      String email = snapshot.data.get('email');
+
+                      return Row(children: [
+                        CircleAvatar(
+                          radius: width * 0.2,
+                          backgroundColor: Colors.white,
+                          backgroundImage: AssetImage('assets/newuser.png'),
                         ),
-                        maxLines: 1,
-                      ),
-                      SizedBox(height: 4.0),
-                      AutoSizeText(
-                        'email@domail.com',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18.0,
+                        SizedBox(width: 12.0),
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AutoSizeText(
+                                name == null ? 'Unknwon' : '$name',
+                                style: TextStyle(
+                                  color: textColor,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 22.0,
+                                ),
+                                maxLines: 1,
+                              ),
+                              SizedBox(height: 4.0),
+                              AutoSizeText(
+                                email == null ? 'N/A' : '$email',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18.0,
+                                ),
+                                maxLines: 1,
+                              ),
+                            ],
+                          ),
                         ),
-                        maxLines: 1,
-                      ),
-                    ],
-                  ),
-                ),
-              ]),
+                      ]);
+                    } else {
+                      return Container();
+                    }
+                  }
+                  return Center(child: CircularProgressIndicator());
+                },
+              ),
               Divider(
                 height: 20.0,
                 thickness: 2,
@@ -77,7 +94,12 @@ class Profile extends StatelessWidget {
                   context: context,
                   tiles: [
                     ListTile(
-                      leading: Icon(FontAwesomeIcons.key),
+                      leading: CircleAvatar(
+                          backgroundColor: Color(0xfff4fa9c),
+                          child: Icon(
+                            FontAwesomeIcons.key,
+                            color: Color(0xfff3558e),
+                          )),
                       title: Text(
                         'Reset Password',
                         style: TextStyle(
@@ -86,7 +108,9 @@ class Profile extends StatelessWidget {
                       ),
                     ),
                     ListTile(
-                      leading: Icon(FontAwesomeIcons.handsHelping),
+                      leading: CircleAvatar(
+                          backgroundColor: Color(0xffa7ff83),
+                          child: Icon(FontAwesomeIcons.handsHelping)),
                       title: Text(
                         'About Application',
                         style: TextStyle(
@@ -95,7 +119,12 @@ class Profile extends StatelessWidget {
                       ),
                     ),
                     ListTile(
-                      leading: Icon(FontAwesomeIcons.userAlt),
+                      leading: CircleAvatar(
+                          backgroundColor: Color(0xfff0f0f0),
+                          child: Icon(
+                            FontAwesomeIcons.userAlt,
+                            color: Color(0xff575151),
+                          )),
                       title: Text(
                         'About Developer',
                         style: TextStyle(

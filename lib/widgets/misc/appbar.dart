@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movietime/widgets/misc/profile.dart';
 
 import '../movieFinder/search.dart';
 
@@ -35,15 +36,22 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
             onPressed: () {
               showSearch(context: context, delegate: Search());
             }),
-        IconButton(
-            icon: Icon(Icons.person, size: 28.0),
-            onPressed: () {
-              print("Profile");
-            }),
+        Padding(
+          padding: EdgeInsets.only(right: 5.0),
+          child: InkWell(
+            onTap: () => Navigator.push(
+                context, MaterialPageRoute(builder: (_) => Profile())),
+            child: CircleAvatar(
+              radius: 20.0,
+              backgroundColor: Colors.white,
+              child: Image.asset('assets/newuser.png'),
+            ),
+          ),
+        )
       ],
     );
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(60.0);
+  Size get preferredSize => Size.fromHeight(55.0);
 }

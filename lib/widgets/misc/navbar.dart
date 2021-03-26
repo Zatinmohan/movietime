@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:movietime/firebase/authentication.dart';
 import 'package:movietime/widgets/login_signup/loginpage.dart';
 import 'package:movietime/widgets/misc/profile.dart';
-import 'package:movietime/widgets/misc/setting.dart';
+import 'package:movietime/widgets/misc/settings.dart';
 import 'package:provider/provider.dart';
 
 class NavBar extends StatelessWidget {
@@ -14,13 +15,33 @@ class NavBar extends StatelessWidget {
         child: Column(children: [
           DrawerHeader(
             child: Center(
-              child: Text(
-                'Hi, Jatin Mohan',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 25.0,
-                ),
+              child: StreamBuilder<DocumentSnapshot>(
+                stream: context.read<AuthenticationServices>().getDataBase(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.active) {
+                    String name = snapshot.data.get('name').toString();
+                    if (snapshot.hasData) {
+                      return Text(
+                        name != null ? '$name' : 'Hi Unknown',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 25.0,
+                        ),
+                      );
+                    } else {
+                      return Text(
+                        'Hi, Unknown',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 25.0,
+                        ),
+                      );
+                    }
+                  }
+                  return Center(child: CircularProgressIndicator());
+                },
               ),
             ),
           ),
@@ -48,7 +69,7 @@ class NavBar extends StatelessWidget {
                     title: Text('Settings'),
                     onTap: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => Settings()));
+                          MaterialPageRoute(builder: (_) => UserPreference()));
                     },
                   ),
                 ],
