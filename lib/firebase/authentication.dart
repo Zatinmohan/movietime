@@ -54,4 +54,44 @@ class AuthenticationServices {
         .doc(_firebase.currentUser.uid)
         .snapshots();
   }
+
+  Stream<DocumentSnapshot> searchData(int id) {
+    return FirebaseFirestore.instance
+        .collection("movieuser")
+        .doc(_firebase.currentUser.uid)
+        .snapshots()
+        .where((event) {
+      List<dynamic> values = List();
+      event["LikedMovies"].forEach((k, v) => values.add(k));
+
+      for (int i = 0; i < values.length; i++) {
+        if (values[i] == id.toString()) {
+          print("TRUE");
+          return true;
+        }
+      }
+      print("FALSE");
+      return false;
+    });
+  }
+
+  Future<dynamic> addData(int id, String name, String image) {
+    return FirebaseFirestore.instance
+        .collection('movieuser')
+        .doc(_firebase.currentUser.uid)
+        .update({
+      "LikedMovies.$id": {
+        "id": id,
+        "title": name,
+        "image": image,
+      }
+    });
+  }
+
+  Future<dynamic> removeData(int id) {
+    return FirebaseFirestore.instance
+        .collection('movieuser')
+        .doc(_firebase.currentUser.uid)
+        .update({"LikedMovies.${id.toString()}": FieldValue.delete()});
+  }
 }

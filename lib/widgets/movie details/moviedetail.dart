@@ -118,7 +118,7 @@ class _MovieDetailState extends State<MovieDetail> {
                                     ),
                             ),
                           ),
-                          UpperToolbar(),
+                          UpperToolbar(id: widget.id,name:title,image:poster),
                           Positioned(
                             top: height * 0.39,
                             width: width - 5,

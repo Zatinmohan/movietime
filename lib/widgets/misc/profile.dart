@@ -7,6 +7,7 @@ import 'package:movietime/firebase/authentication.dart';
 import 'package:movietime/model/colordata.dart';
 import 'package:movietime/widgets/login_signup/loginpage.dart';
 import 'package:movietime/widgets/misc/appbar.dart';
+import 'package:movietime/widgets/movie%20details/savedMovies.dart';
 import 'package:provider/provider.dart';
 
 class Profile extends StatelessWidget {
@@ -106,6 +107,22 @@ class Profile extends StatelessWidget {
                           fontSize: 19.0,
                         ),
                       ),
+                    ),
+                    ListTile(
+                      leading: CircleAvatar(
+                          backgroundColor: Color(0xfff5f5f5),
+                          child: Icon(
+                            Icons.movie,
+                            color: Color(0xffd72323),
+                          )),
+                      title: Text(
+                        'Saved Movies',
+                        style: TextStyle(
+                          fontSize: 19.0,
+                        ),
+                      ),
+                      onTap: () => Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => SavedMovies())),
                     ),
                     ListTile(
                       leading: CircleAvatar(

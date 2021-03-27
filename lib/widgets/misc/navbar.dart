@@ -5,6 +5,7 @@ import 'package:movietime/firebase/authentication.dart';
 import 'package:movietime/widgets/login_signup/loginpage.dart';
 import 'package:movietime/widgets/misc/profile.dart';
 import 'package:movietime/widgets/misc/settings.dart';
+import 'package:movietime/widgets/movie%20details/savedMovies.dart';
 import 'package:provider/provider.dart';
 
 class NavBar extends StatelessWidget {
@@ -45,36 +46,39 @@ class NavBar extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
-            child: Align(
-              alignment: Alignment.center,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ListTile(
-                    leading: Icon(FontAwesomeIcons.home),
-                    title: Text('Home'),
-                    onTap: () => print("HOME"),
-                  ),
-                  ListTile(
-                    leading: Icon(FontAwesomeIcons.userAlt),
-                    title: Text('Profile'),
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => Profile()));
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(FontAwesomeIcons.cog),
-                    title: Text('Settings'),
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => UserPreference()));
-                    },
-                  ),
-                ],
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ListTile(
+                leading: Icon(FontAwesomeIcons.home),
+                title: Text('Home'),
+                onTap: () => print("HOME"),
               ),
-            ),
+              ListTile(
+                leading: Icon(FontAwesomeIcons.userAlt),
+                title: Text('Profile'),
+                onTap: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (_) => Profile()));
+                },
+              ),
+              ListTile(
+                leading: Icon(FontAwesomeIcons.solidHeart),
+                title: Text('Liked Movies'),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => SavedMovies()));
+                },
+              ),
+              ListTile(
+                leading: Icon(FontAwesomeIcons.cog),
+                title: Text('Settings'),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => UserPreference()));
+                },
+              ),
+            ],
           ),
           Expanded(
             child: Align(
