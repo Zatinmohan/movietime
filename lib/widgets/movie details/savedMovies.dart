@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:movietime/firebase/authentication.dart';
 import 'package:movietime/model/colordata.dart';
 import 'package:movietime/widgets/misc/appbar.dart';
+import 'package:movietime/widgets/misc/navbar.dart';
 import 'package:movietime/widgets/movie%20details/movies_all.dart';
 import 'package:optimized_cached_image/optimized_cached_image.dart';
 import 'package:provider/provider.dart';
@@ -13,10 +14,15 @@ class SavedMovies extends StatefulWidget {
 }
 
 class _SavedMoviesState extends State<SavedMovies> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
+      key: _scaffoldKey,
+      drawer: NavBar(),
+      appBar: CustomAppBar(
+        scaffoldKey: _scaffoldKey,
+      ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
         child: StreamBuilder<DocumentSnapshot>(

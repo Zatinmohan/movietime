@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:movietime/firebase/authentication.dart';
 import 'package:movietime/model/colordata.dart';
 import 'package:movietime/widgets/login_signup/loginpage.dart';
-import 'package:movietime/widgets/misc/appbar.dart';
 import 'package:movietime/widgets/movie%20details/savedMovies.dart';
 import 'package:provider/provider.dart';
 
@@ -95,6 +94,8 @@ class Profile extends StatelessWidget {
                   context: context,
                   tiles: [
                     ListTile(
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 20.0),
                       leading: CircleAvatar(
                           backgroundColor: Color(0xfff4fa9c),
                           child: Icon(
@@ -104,11 +105,13 @@ class Profile extends StatelessWidget {
                       title: Text(
                         'Reset Password',
                         style: TextStyle(
-                          fontSize: 19.0,
+                          fontSize: width * 0.055,
                         ),
                       ),
                     ),
                     ListTile(
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 20.0),
                       leading: CircleAvatar(
                           backgroundColor: Color(0xfff5f5f5),
                           child: Icon(
@@ -118,24 +121,28 @@ class Profile extends StatelessWidget {
                       title: Text(
                         'Saved Movies',
                         style: TextStyle(
-                          fontSize: 19.0,
+                          fontSize: width * 0.055,
                         ),
                       ),
                       onTap: () => Navigator.push(context,
                           MaterialPageRoute(builder: (_) => SavedMovies())),
                     ),
                     ListTile(
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 20.0),
                       leading: CircleAvatar(
                           backgroundColor: Color(0xffa7ff83),
                           child: Icon(FontAwesomeIcons.handsHelping)),
                       title: Text(
                         'About Application',
                         style: TextStyle(
-                          fontSize: 19.0,
+                          fontSize: width * 0.055,
                         ),
                       ),
                     ),
                     ListTile(
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 20.0),
                       leading: CircleAvatar(
                           backgroundColor: Color(0xfff0f0f0),
                           child: Icon(
@@ -145,7 +152,7 @@ class Profile extends StatelessWidget {
                       title: Text(
                         'About Developer',
                         style: TextStyle(
-                          fontSize: 19.0,
+                          fontSize: width * 0.055,
                         ),
                       ),
                     ),

@@ -38,10 +38,8 @@ class _UpperToolbarState extends State<UpperToolbar> {
                     .read<AuthenticationServices>()
                     .searchData(widget.id),
                 builder: (context, snapshot) {
-                  print("Connection State == ${snapshot.connectionState}");
                   if (snapshot.connectionState == ConnectionState.active) {
                     if (snapshot.hasData) {
-                      print("INSIDE DATA");
                       return IconButton(
                           icon: Icon(
                             FontAwesomeIcons.solidHeart,
@@ -54,7 +52,6 @@ class _UpperToolbarState extends State<UpperToolbar> {
                                 .removeData(widget.id);
                           });
                     } else {
-                      print("INSIDE NO DATA");
                       return IconButton(
                           icon: Icon(
                             FontAwesomeIcons.heart,

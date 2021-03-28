@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthenticationServices {
   final FirebaseAuth _firebase;
@@ -66,11 +68,9 @@ class AuthenticationServices {
 
       for (int i = 0; i < values.length; i++) {
         if (values[i] == id.toString()) {
-          print("TRUE");
           return true;
         }
       }
-      print("FALSE");
       return false;
     });
   }
@@ -93,5 +93,41 @@ class AuthenticationServices {
         .collection('movieuser')
         .doc(_firebase.currentUser.uid)
         .update({"LikedMovies.${id.toString()}": FieldValue.delete()});
+  }
+
+  Future<String> signInWithGoogle() async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    User user;
+    final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+
+    final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount.authentication;
+
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleSignInAuthentication.accessToken,
+      idToken: googleSignInAuthentication.idToken,
+    );
+
+    try {
+      final UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+
+      user = userCredential.user;
+      googleSignIn.signOut();
+      FirebaseFirestore.instance.collection('movieuser').doc(user.uid).set({
+        'name': user.displayName,
+        'email': user.email,
+      });
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "account-exists-with-different-credential") {
+        return "Already Exist";
+      } else if (e.code == "invalid-credential") {
+        return "Invalid Credentials";
+      }
+    } catch (e) {
+      return "Error";
+    }
+
+    return "Successful";
   }
 }

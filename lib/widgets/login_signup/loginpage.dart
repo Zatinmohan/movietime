@@ -177,6 +177,7 @@ class LoginPage extends StatelessWidget {
               SizedBox(height: height * 0.08),
               GoogleFacebook(
                 width: width,
+                loginContext: context,
               ),
               SizedBox(height: 32.0),
               Align(

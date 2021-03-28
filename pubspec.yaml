@@ -37,6 +37,8 @@ dependencies:
   firebase_auth:
   firebase_core:
   cloud_firestore:
+
+  google_sign_in:
   
   provider:
   optimized_cached_image: 

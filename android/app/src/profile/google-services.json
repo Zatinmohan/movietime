@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "977336862407",
+    "project_id": "movietime-fedfd",
+    "storage_bucket": "movietime-fedfd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:977336862407:android:ea27f976922d1f5b1ee0e2",
+        "android_client_info": {
+          "package_name": "com.example.movietime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "977336862407-niho6od3ht94fuvuku2bccrtq8foh1jk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.movietime",
+            "certificate_hash": "568250d04d8bd66ab751f2c122b1a1dd048cb74e"
+          }
+        },
+        {
+          "client_id": "977336862407-s4unisv8c5aln6vr0d84tg6julm900eq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5ZSReiSBmA1vaoSf8LDAuZMqoBxbzv2A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "977336862407-s4unisv8c5aln6vr0d84tg6julm900eq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

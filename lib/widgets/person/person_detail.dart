@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:movietime/api/api.dart';
 import 'package:movietime/model/castModel.dart';
 import 'package:movietime/widgets/misc/appbar.dart';
@@ -17,7 +18,6 @@ class PersonDetail extends StatefulWidget {
 }
 
 class _PersonDetailState extends State<PersonDetail> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   Future<CastModel> builder;
   @override
   void initState() {
@@ -28,9 +28,17 @@ class _PersonDetailState extends State<PersonDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
-      appBar: CustomAppBar(
-        scaffoldKey: _scaffoldKey,
+      appBar: AppBar(
+        elevation: 0.0,
+        title: Padding(
+          padding: EdgeInsets.symmetric(horizontal: widget.width * 0.11),
+          child: Text('movietime',
+              style: GoogleFonts.fredokaOne(
+                color: Color(0xfffb5558),
+                fontWeight: FontWeight.w500,
+                fontSize: 28.0,
+              )),
+        ),
       ),
       body: Center(
         child: SingleChildScrollView(

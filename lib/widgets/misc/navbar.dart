@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:movietime/firebase/authentication.dart';
+import 'package:movietime/mainpage.dart';
 import 'package:movietime/widgets/login_signup/loginpage.dart';
 import 'package:movietime/widgets/misc/profile.dart';
 import 'package:movietime/widgets/misc/settings.dart';
@@ -23,7 +24,7 @@ class NavBar extends StatelessWidget {
                     String name = snapshot.data.get('name').toString();
                     if (snapshot.hasData) {
                       return Text(
-                        name != null ? '$name' : 'Hi Unknown',
+                        name != null ? 'Hey, $name' : 'Hi Unknown',
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w700,
@@ -52,7 +53,8 @@ class NavBar extends StatelessWidget {
               ListTile(
                 leading: Icon(FontAwesomeIcons.home),
                 title: Text('Home'),
-                onTap: () => print("HOME"),
+                onTap: () => Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (_) => MainPage())),
               ),
               ListTile(
                 leading: Icon(FontAwesomeIcons.userAlt),
