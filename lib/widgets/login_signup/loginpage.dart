@@ -35,6 +35,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    final node = FocusScope.of(context);
     return Scaffold(
         body: SafeArea(
       child: SingleChildScrollView(
@@ -72,6 +73,8 @@ class LoginPage extends StatelessWidget {
                     TextFormField(
                       controller: _emailController,
                       validator: emailValidator,
+                      textInputAction: TextInputAction.next,
+                      onEditingComplete: () => node.nextFocus(),
                       decoration: InputDecoration(
                         hintText: 'Email, phone number, username',
                         filled: true,
@@ -86,6 +89,8 @@ class LoginPage extends StatelessWidget {
                     TextFormField(
                       controller: _passwordController,
                       validator: passwordValidator,
+                      textInputAction: TextInputAction.done,
+                      onEditingComplete: () => node.unfocus(),
                       obscureText: true,
                       decoration: InputDecoration(
                         hintText: 'Password',

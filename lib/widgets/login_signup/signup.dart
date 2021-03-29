@@ -55,6 +55,7 @@ class _SignupState extends State<Signup> {
 
   @override
   Widget build(BuildContext context) {
+    final node = FocusScope.of(context);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -96,6 +97,9 @@ class _SignupState extends State<Signup> {
                     TextFormField(
                       validator: nameValidator,
                       controller: _nameController,
+                      textInputAction: TextInputAction.next,
+                      textCapitalization: TextCapitalization.words,
+                      onEditingComplete: () => node.nextFocus(),
                       decoration: InputDecoration(
                         hintText: 'Name',
                         filled: true,
@@ -110,6 +114,8 @@ class _SignupState extends State<Signup> {
                     TextFormField(
                       validator: emailValidator,
                       controller: _emailController,
+                      textInputAction: TextInputAction.next,
+                      onEditingComplete: () => node.nextFocus(),
                       decoration: InputDecoration(
                         hintText: 'Email',
                         filled: true,
@@ -125,6 +131,8 @@ class _SignupState extends State<Signup> {
                       controller: _passwordController,
                       validator: passwordValidator,
                       obscureText: true,
+                      textInputAction: TextInputAction.next,
+                      onEditingComplete: () => node.nextFocus(),
                       decoration: InputDecoration(
                         hintText: 'Password',
                         filled: true,
@@ -140,6 +148,8 @@ class _SignupState extends State<Signup> {
                       controller: _retypePasswordController,
                       validator: retypePasswordValidator,
                       obscureText: true,
+                      textInputAction: TextInputAction.done,
+                      onEditingComplete: () => node.unfocus(),
                       decoration: InputDecoration(
                         hintText: 'Retype Password',
                         filled: true,
