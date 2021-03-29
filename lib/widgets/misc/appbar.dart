@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:movietime/model/colordata.dart';
 import 'package:movietime/widgets/profile/profile.dart';
 
 import '../movieFinder/search.dart';
@@ -21,12 +21,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
           onPressed: () {
             scaffoldKey.currentState.openDrawer();
           }),
-      title: Text('movietime',
-          style: GoogleFonts.fredokaOne(
-            color: Color(0xfffb5558),
-            fontWeight: FontWeight.w500,
-            fontSize: 28.0,
-          )),
+      title: title,
       actions: [
         IconButton(
             icon: Icon(

@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:movietime/firebase/authentication.dart';
 import 'package:movietime/model/colordata.dart';
 import 'package:movietime/widgets/login_signup/loginpage.dart';
@@ -21,12 +20,7 @@ class Profile extends StatelessWidget {
         elevation: 0.0,
         title: Padding(
           padding: EdgeInsets.symmetric(horizontal: width * 0.11),
-          child: Text('movietime',
-              style: GoogleFonts.fredokaOne(
-                color: Color(0xfffb5558),
-                fontWeight: FontWeight.w500,
-                fontSize: 28.0,
-              )),
+          child: title,
         ),
       ),
       body: Center(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:movietime/api/api.dart';
 import 'package:movietime/model/castModel.dart';
+import 'package:movietime/model/colordata.dart';
 import 'package:movietime/widgets/movie%20details/photos.dart';
 import 'package:movietime/widgets/movie%20details/storyline.dart';
 import 'package:movietime/widgets/person/above.dart';
@@ -31,12 +31,7 @@ class _PersonDetailState extends State<PersonDetail> {
         elevation: 0.0,
         title: Padding(
           padding: EdgeInsets.symmetric(horizontal: widget.width * 0.11),
-          child: Text('movietime',
-              style: GoogleFonts.fredokaOne(
-                color: Color(0xfffb5558),
-                fontWeight: FontWeight.w500,
-                fontSize: 28.0,
-              )),
+          child: title,
         ),
       ),
       body: Center(

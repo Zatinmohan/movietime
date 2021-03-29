@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:movietime/model/movieModel.dart';
 import 'package:movietime/widgets/misc/appbar.dart';
+import 'package:movietime/widgets/misc/navbar.dart';
 import 'package:movietime/widgets/movie%20details/movies_all.dart';
 
 class ShowAll extends StatelessWidget {
   final title, movies;
   final bool check;
 
-  //final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   ShowAll({Key key, this.title, this.movies, this.check}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //key: _scaffoldKey,
+      drawer: NavBar(),
+      key: _scaffoldKey,
       appBar: CustomAppBar(
-        scaffoldKey: null,
+        scaffoldKey: _scaffoldKey,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
