@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:movietime/firebase/authentication.dart';
 import 'package:movietime/model/colordata.dart';
 import 'package:movietime/widgets/login_signup/loginpage.dart';
+import 'package:movietime/widgets/misc/aboutApplication.dart';
 import 'package:movietime/widgets/movie%20details/savedMovies.dart';
 import 'package:provider/provider.dart';
 
@@ -139,6 +140,10 @@ class Profile extends StatelessWidget {
                           fontSize: width * 0.055,
                         ),
                       ),
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => AboutApplication())),
                     ),
                     ListTile(
                       contentPadding: EdgeInsets.symmetric(
