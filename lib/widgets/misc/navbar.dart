@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:movietime/firebase/authentication.dart';
 import 'package:movietime/mainpage.dart';
 import 'package:movietime/widgets/login_signup/loginpage.dart';
-import 'package:movietime/widgets/misc/profile.dart';
+import 'package:movietime/widgets/profile/profile.dart';
 import 'package:movietime/widgets/misc/settings.dart';
 import 'package:movietime/widgets/movie%20details/savedMovies.dart';
 import 'package:provider/provider.dart';
@@ -99,13 +99,15 @@ class NavBar extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  context
-                      .read<AuthenticationServices>()
-                      .signOut()
-                      .whenComplete(() => Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (_) => LoginPage()),
-                          ));
+                  context.read<AuthenticationServices>().signOut().whenComplete(
+                      () => Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (_) => LoginPage()),
+                          (route) => false)
+                      //Navigator.pushAndRemoveUntil(
+                      //     context,
+                      //     MaterialPageRoute(builder: (_) => LoginPage()),
+                      //     (Route<dynamic> route) => false)
+                      );
                 },
               ),
             ),

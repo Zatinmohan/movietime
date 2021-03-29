@@ -6,7 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:movietime/firebase/authentication.dart';
 import 'package:movietime/model/colordata.dart';
 import 'package:movietime/widgets/login_signup/loginpage.dart';
-import 'package:movietime/widgets/misc/aboutApplication.dart';
+import 'package:movietime/widgets/profile/aboutApplication.dart';
+import 'package:movietime/widgets/profile/aboutDeveloper.dart';
 import 'package:movietime/widgets/movie%20details/savedMovies.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +15,7 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    // final height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
@@ -160,6 +161,10 @@ class Profile extends StatelessWidget {
                           fontSize: width * 0.055,
                         ),
                       ),
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => AboutDeveloper(width: width))),
                     ),
                   ],
                 ).toList(),
@@ -175,10 +180,10 @@ class Profile extends StatelessWidget {
                       onPressed: () => context
                           .read<AuthenticationServices>()
                           .signOut()
-                          .whenComplete(() => Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(builder: (_) => LoginPage()),
-                              )),
+                          .whenComplete(() => Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(builder: (_) => LoginPage()),
+                              (Route<dynamic> route) => false)),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
                       ),

@@ -1,8 +1,7 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:movietime/model/colordata.dart';
-import 'package:movietime/widgets/misc/aboutDetails.dart';
+import 'package:movietime/widgets/profile/aboutDetails.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutApplication extends StatelessWidget {

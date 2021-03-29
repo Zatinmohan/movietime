@@ -193,7 +193,7 @@ class LoginPage extends StatelessWidget {
                         )),
                     TextSpan(
                         recognizer: new TapGestureRecognizer()
-                          ..onTap = () => Navigator.pushReplacement(
+                          ..onTap = () => Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (_) => Signup(

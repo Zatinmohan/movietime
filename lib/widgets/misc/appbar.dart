@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:movietime/widgets/misc/profile.dart';
+import 'package:movietime/widgets/profile/profile.dart';
 
 import '../movieFinder/search.dart';
 
