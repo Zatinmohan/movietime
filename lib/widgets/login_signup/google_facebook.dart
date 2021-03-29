@@ -70,7 +70,7 @@ class GoogleFacebook extends StatelessWidget {
                         .signInWithGoogle()
                         .then((value) {
                       if (value == "Successful") {
-                        Navigator.push(loginContext,
+                        Navigator.pushReplacement(loginContext,
                             MaterialPageRoute(builder: (_) => MainPage()));
                       } else if (value == "Already Exist")
                         Scaffold.of(loginContext).showSnackBar(SnackBar(

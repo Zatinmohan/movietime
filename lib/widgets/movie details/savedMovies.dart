@@ -31,11 +31,16 @@ class _SavedMoviesState extends State<SavedMovies> {
             if (snapshot.connectionState == ConnectionState.active) {
               List<dynamic> savedMovies;
               if (snapshot.hasData) {
-                savedMovies = snapshot.data
-                    .get('LikedMovies')
-                    .entries
-                    .map((entry) => entry.value)
-                    .toList();
+                try {
+                  savedMovies = snapshot.data
+                      .get('LikedMovies')
+                      .entries
+                      .map((entry) => entry.value)
+                      .toList();
+                } catch (e) {
+                  // For Database Users
+                  context.read<AuthenticationServices>().addField();
+                }
 
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

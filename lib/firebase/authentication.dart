@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthenticationServices {
@@ -32,11 +31,12 @@ class AuthenticationServices {
           .set({
         'name': name,
         'email': username,
+        'LikedMovies': {},
       });
 
       return "Successful";
     } on FirebaseAuthException catch (e) {
-      return e.message;
+      return e.code;
     }
   }
 
@@ -95,6 +95,13 @@ class AuthenticationServices {
         .update({"LikedMovies.${id.toString()}": FieldValue.delete()});
   }
 
+  Future<dynamic> addField() {
+    return FirebaseFirestore.instance
+        .collection('movieuser')
+        .doc(_firebase.currentUser.uid)
+        .update({'LikedMovies': {}});
+  }
+
   Future<String> signInWithGoogle() async {
     final GoogleSignIn googleSignIn = GoogleSignIn();
     User user;
@@ -114,7 +121,7 @@ class AuthenticationServices {
 
       user = userCredential.user;
       googleSignIn.signOut();
-      FirebaseFirestore.instance.collection('movieuser').doc(user.uid).set({
+      FirebaseFirestore.instance.collection('movieuser').doc(user.uid).update({
         'name': user.displayName,
         'email': user.email,
       });

@@ -186,6 +186,10 @@ class _SignupState extends State<Signup> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (_) => LoginPage()));
+                                  } else if (value == "email-already-in-use") {
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                        content:
+                                            Text("Account Already Exists")));
                                   } else
                                     Scaffold.of(context).showSnackBar(SnackBar(
                                         content: Text(
