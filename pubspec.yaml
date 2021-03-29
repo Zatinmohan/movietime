@@ -33,6 +33,7 @@ dependencies:
   font_awesome_flutter:
   readmore:
   shared_preferences:
+  
   # Firebase 
   firebase_auth:
   firebase_core:
@@ -43,8 +44,9 @@ dependencies:
   provider:
   optimized_cached_image: 
   auto_size_text:
-  
+  share:
 
+    
 dev_dependencies:
   flutter_test:
     sdk: flutter

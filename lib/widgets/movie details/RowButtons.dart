@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:movietime/api/url.dart';
 import 'package:movietime/firebase/authentication.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 
 class UpperToolbar extends StatefulWidget {
   final id, name, image;
@@ -78,12 +80,27 @@ class _UpperToolbarState extends State<UpperToolbar> {
                             .addData(widget.id, widget.name, widget.image);
                       });
                 }),
-            IconButton(
-                icon: Icon(
-                  Icons.more_vert_outlined,
-                  color: Colors.white,
+            PopupMenuButton(
+              icon: Icon(
+                Icons.more_vert,
+                color: Colors.white,
+              ),
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  child: Text('Share'),
+                  value: 1,
                 ),
-                onPressed: () => print("option"))
+                PopupMenuItem(
+                  child: Text('Report'),
+                  value: 2,
+                ),
+              ],
+              onSelected: (selected) {
+                if (selected == 1)
+                  Share.share(
+                      "Check out this movie \n ${URLs.movieShareURL}${widget.id}-${widget.name}");
+              },
+            )
           ],
         ),
       ],

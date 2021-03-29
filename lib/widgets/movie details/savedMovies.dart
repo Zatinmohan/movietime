@@ -5,7 +5,6 @@ import 'package:movietime/model/colordata.dart';
 import 'package:movietime/widgets/misc/appbar.dart';
 import 'package:movietime/widgets/misc/navbar.dart';
 import 'package:movietime/widgets/movie%20details/movies_all.dart';
-import 'package:optimized_cached_image/optimized_cached_image.dart';
 import 'package:provider/provider.dart';
 
 class SavedMovies extends StatefulWidget {

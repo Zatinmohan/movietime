@@ -3,6 +3,7 @@ import 'package:movietime/api/api_key.dart';
 class URLs {
   static String _baseURL = "https://api.themoviedb.org/3/";
   static String imageURL = "https://image.tmdb.org/t/p/original";
+  static String movieShareURL = "https://www.themoviedb.org/movie/";
   static String _apiField = "?api_key=";
 
   static String _trendingURL =

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:movietime/api/api.dart';
-import 'package:movietime/model/colordata.dart';
 import 'package:movietime/model/movieModel.dart';
 import 'package:movietime/model/movieallDetails.dart';
 import 'package:movietime/api/url.dart';
@@ -14,7 +13,6 @@ import 'package:movietime/widgets/movie%20details/movieInfo.dart';
 import 'package:movietime/widgets/movie%20details/photos.dart';
 
 import 'package:movietime/widgets/movie%20details/storyline.dart';
-import 'package:movietime/widgets/movie%20details/streamServices.dart';
 import 'package:optimized_cached_image/widgets.dart';
 
 class MovieDetail extends StatefulWidget {
@@ -118,7 +116,8 @@ class _MovieDetailState extends State<MovieDetail> {
                                     ),
                             ),
                           ),
-                          UpperToolbar(id: widget.id,name:title,image:poster),
+                          UpperToolbar(
+                              id: widget.id, name: title, image: poster),
                           Positioned(
                             top: height * 0.39,
                             width: width - 5,
