@@ -51,11 +51,11 @@ class NavBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ListTile(
-                leading: Icon(FontAwesomeIcons.home),
-                title: Text('Home'),
-                onTap: () => Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (_) => MainPage())),
-              ),
+                  leading: Icon(FontAwesomeIcons.home),
+                  title: Text('Home'),
+                  onTap: () => Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (_) => MainPage()),
+                      (route) => false)),
               ListTile(
                 leading: Icon(FontAwesomeIcons.userAlt),
                 title: Text('Profile'),
@@ -102,12 +102,7 @@ class NavBar extends StatelessWidget {
                   context.read<AuthenticationServices>().signOut().whenComplete(
                       () => Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(builder: (_) => LoginPage()),
-                          (route) => false)
-                      //Navigator.pushAndRemoveUntil(
-                      //     context,
-                      //     MaterialPageRoute(builder: (_) => LoginPage()),
-                      //     (Route<dynamic> route) => false)
-                      );
+                          (route) => false));
                 },
               ),
             ),

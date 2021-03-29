@@ -101,13 +101,20 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 14.0),
-              Text(
-                'Forget your password?',
-                style: TextStyle(
-                  color: linkText,
-                  fontSize: width * 0.044,
+              Builder(
+                builder: (context) => InkWell(
+                  onTap: () => Scaffold.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                          "Developer is Lazy and doesn't care about your password"))),
+                  child: Text(
+                    'Forget your password?',
+                    style: TextStyle(
+                      color: linkText,
+                      fontSize: width * 0.044,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
                 ),
-                textAlign: TextAlign.left,
               ),
               SizedBox(height: 25.0),
               Builder(

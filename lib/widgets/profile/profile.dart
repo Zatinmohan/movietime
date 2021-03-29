@@ -95,20 +95,25 @@ class Profile extends StatelessWidget {
                 children: ListTile.divideTiles(
                   context: context,
                   tiles: [
-                    ListTile(
-                      contentPadding: EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 20.0),
-                      leading: CircleAvatar(
-                          backgroundColor: Color(0xfff4fa9c),
-                          child: Icon(
-                            FontAwesomeIcons.key,
-                            color: Color(0xfff3558e),
-                          )),
-                      title: Text(
-                        'Reset Password',
-                        style: TextStyle(
-                          fontSize: width * 0.055,
+                    Builder(
+                      builder: (context) => ListTile(
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 20.0),
+                        leading: CircleAvatar(
+                            backgroundColor: Color(0xfff4fa9c),
+                            child: Icon(
+                              FontAwesomeIcons.key,
+                              color: Color(0xfff3558e),
+                            )),
+                        title: Text(
+                          'Reset Password',
+                          style: TextStyle(
+                            fontSize: width * 0.055,
+                          ),
                         ),
+                        onTap: () => Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text(
+                                "Developer is Lazy and doesn't care about your password"))),
                       ),
                     ),
                     ListTile(
