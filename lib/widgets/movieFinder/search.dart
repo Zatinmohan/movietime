@@ -46,30 +46,34 @@ class Search extends SearchDelegate<String> {
   @override
   Widget buildSuggestions(BuildContext context) {
     if (SharedFiles().checkMovie()) movieHistory = SharedFiles().getMovies();
-    return ListView.builder(
-      itemCount: movieHistory.length,
-      itemBuilder: (BuildContext context, int index) {
-        return GestureDetector(
-          onTap: () {
-            query = movieHistory[index];
-          },
-          child: ListTile(
-            key: Key(movieHistory.length.toString()),
-            leading: Icon(Icons.history),
-            title: Text('${movieHistory[index]}',
-                style: TextStyle(
-                  color: textColor,
-                  fontSize: 20.0,
-                )),
-            trailing: IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  movieHistory.removeAt(index);
-                  SharedFiles().setMovies(movieHistory);
-                }),
-          ),
-        );
-      },
+    return StatefulBuilder(
+      builder: (context, setState) => ListView.builder(
+        itemCount: movieHistory.length,
+        itemBuilder: (BuildContext context, int index) {
+          return GestureDetector(
+            onTap: () {
+              query = movieHistory[index];
+            },
+            child: ListTile(
+              key: Key(movieHistory.length.toString()),
+              leading: Icon(Icons.history),
+              title: Text('${movieHistory[index]}',
+                  style: TextStyle(
+                    color: textColor,
+                    fontSize: 20.0,
+                  )),
+              trailing: IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () {
+                    setState(() {
+                      movieHistory.removeAt(index);
+                      SharedFiles().setMovies(movieHistory);
+                    });
+                  }),
+            ),
+          );
+        },
+      ),
     );
   }
 }
