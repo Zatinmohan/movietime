@@ -5,7 +5,7 @@ A flutter app that shows you details about movies and information related to mov
 
 - [Design Courtsey](https://www.behance.net/gallery/96923617/Movie-App-Concept?tracking_source=search_projects_recommended%7Cmovie%20app)
 - [The Movie Database API](https://developers.themoviedb.org/3/getting-started/introduction)
-- ### Note - make sure to apply for an API key on above link in order to get this code working
+- Note - make sure to apply for an API key on above link in order to get this code working
 
 
 ## Getting Started
