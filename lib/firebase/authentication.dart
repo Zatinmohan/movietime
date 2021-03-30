@@ -120,10 +120,21 @@ class AuthenticationServices {
           await FirebaseAuth.instance.signInWithCredential(credential);
 
       user = userCredential.user;
+
       googleSignIn.signOut();
-      FirebaseFirestore.instance.collection('movieuser').doc(user.uid).update({
-        'name': user.displayName,
-        'email': user.email,
+      FirebaseFirestore.instance
+          .collection('movieuser')
+          .doc(user.uid)
+          .get()
+          .then((value) {
+        if (!value.exists)
+          return FirebaseFirestore.instance
+              .collection('movieuser')
+              .doc(user.uid)
+              .set({
+            'email': user.email,
+            'name': user.displayName,
+          });
       });
     } on FirebaseAuthException catch (e) {
       if (e.code == "account-exists-with-different-credential") {
