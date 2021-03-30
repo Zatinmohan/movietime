@@ -46,6 +46,7 @@ dependencies:
   auto_size_text:
   share:
   url_launcher:
+  fluttertoast:
   
 dev_dependencies:
   flutter_test:

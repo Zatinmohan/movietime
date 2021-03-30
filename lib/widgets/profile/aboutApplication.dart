@@ -156,6 +156,12 @@ class AboutApplication extends StatelessWidget {
                 url: "https://pub.dev/packages/share",
                 icon: FontAwesomeIcons.share,
               ),
+              ReourceWidget(
+                title: "Flutter Toast",
+                subtitle: "Application Plugin",
+                url: "https://pub.dev/packages/fluttertoast",
+                icon: Icons.message,
+              ),
             ],
           ),
         )));

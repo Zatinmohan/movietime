@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:movietime/widgets/misc/navbar.dart';
 import 'package:movietime/widgets/misc/appbar.dart';
 import 'package:movietime/widgets/categories/colrow.dart';
@@ -17,6 +18,8 @@ class _MainPageState extends State<MainPage> {
 
   List<dynamic> valueList = new List();
 
+  DateTime currentBackPressTime;
+
   @override
   void initState() {
     super.initState();
@@ -26,44 +29,58 @@ class _MainPageState extends State<MainPage> {
     valueList.add(APIManager().getupComing());
   }
 
+  Future<bool> backTwiceToExit() {
+    DateTime now = DateTime.now();
+    if (currentBackPressTime == null ||
+        now.difference(currentBackPressTime) > Duration(seconds: 2)) {
+      currentBackPressTime = now;
+      Fluttertoast.showToast(msg: "Press Again to Exit");
+      return Future.value(false);
+    }
+    return Future.value(true);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
       drawer: NavBar(),
       appBar: CustomAppBar(scaffoldKey: _scaffoldKey),
-      body: SingleChildScrollView(
-          child: Column(
-        children: [
-          //SizedBox(height: 10.0),
-          TopMix(movieBuilder: valueList[0]), //Top Movie & series Section
+      body: WillPopScope(
+        onWillPop: backTwiceToExit,
+        child: SingleChildScrollView(
+            child: Column(
+          children: [
+            //SizedBox(height: 10.0),
+            TopMix(movieBuilder: valueList[0]), //Top Movie & series Section
 
-          SizedBox(height: 25.0),
+            SizedBox(height: 25.0),
 
-          Category(
-            title: "MOST POPULAR MOVIES",
-            movieBuilder: valueList[1],
-            width: 180.0,
-            height: 250.0,
-            home: true,
-          ),
-          SizedBox(height: 20.0),
-          Category(
-            title: "NOW PLAYING",
-            movieBuilder: valueList[2],
-            width: 280,
-            height: 240,
-            home: true,
-          ),
-          Category(
-            title: "COMING SOON",
-            movieBuilder: valueList[3],
-            width: 150,
-            height: 200,
-            home: true,
-          ),
-        ],
-      )),
+            Category(
+              title: "MOST POPULAR MOVIES",
+              movieBuilder: valueList[1],
+              width: 180.0,
+              height: 250.0,
+              home: true,
+            ),
+            SizedBox(height: 20.0),
+            Category(
+              title: "NOW PLAYING",
+              movieBuilder: valueList[2],
+              width: 280,
+              height: 240,
+              home: true,
+            ),
+            Category(
+              title: "COMING SOON",
+              movieBuilder: valueList[3],
+              width: 150,
+              height: 200,
+              home: true,
+            ),
+          ],
+        )),
+      ),
     );
   }
 }
